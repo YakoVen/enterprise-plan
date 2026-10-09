@@ -49,12 +49,12 @@ export default function AccountOverviewPage() {
   const recentOrders = [...orders].sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 3);
 
   if (loading) {
-    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-24 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-24 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sm:p-8">
+      <div className="bg-white rounded-md shadow-sm border border-gray-100 p-6 sm:p-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Bonjour, {displayName}</h1>
         <p className="text-gray-600">
           Bienvenue sur votre tableau de bord. Ici vous pouvez vérifier vos activités récentes, mettre à jour vos informations et gérer vos commandes.
@@ -62,7 +62,7 @@ export default function AccountOverviewPage() {
       </div>
 
       {loyaltyCfg.active && (
-        <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl shadow-sm p-6 sm:p-8 text-white">
+        <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-md shadow-sm p-6 sm:p-8 text-white">
           <div className="flex items-center gap-3 mb-2">
             <Award className="h-8 w-8" />
             <div>
@@ -92,10 +92,10 @@ export default function AccountOverviewPage() {
             <Link
               key={stat.name}
               href={stat.href}
-              className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center hover:border-indigo-300 hover:shadow-md transition-all group"
+              className="bg-white rounded-md shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center hover:border-indigo-300 hover:shadow-md transition-all group"
             >
-              <div className="h-12 w-12 bg-indigo-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition-colors">
-                <Icon className="h-6 w-6 text-indigo-600" />
+              <div className="h-12 w-12 bg-cyan-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-cyan-100 transition-colors">
+                <Icon className="h-6 w-6 text-cyan-600" />
               </div>
               <p className="text-sm font-medium text-gray-500 mb-1">{stat.name}</p>
               <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
@@ -104,10 +104,10 @@ export default function AccountOverviewPage() {
         })}
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex items-center justify-between">
           <h2 className="text-lg font-bold text-gray-900">Commandes Récentes</h2>
-          <Link href="/account/orders" className="text-sm font-medium text-indigo-600 hover:text-indigo-500 flex items-center">
+          <Link href="/account/orders" className="text-sm font-medium text-cyan-600 hover:text-cyan-500 flex items-center">
             Voir tout
             <ArrowRight className="ml-1 h-4 w-4" />
           </Link>

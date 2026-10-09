@@ -9,7 +9,7 @@ interface OrderCardProps {
 
 export default function OrderCard({ author, date, rating, content }: OrderCardProps) {
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-3">
+    <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-3">
       <div className="flex items-center justify-between">
         <span className="font-semibold text-gray-900">{author}</span>
         <span className="text-sm text-gray-500">{date}</span>

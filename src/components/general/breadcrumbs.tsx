@@ -14,7 +14,7 @@ interface BreadcrumbsProps {
 export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <nav className="flex items-center text-sm text-gray-500 overflow-x-auto whitespace-nowrap py-4">
-      <Link href="/" className="hover:text-indigo-600 transition-colors flex items-center">
+      <Link href="/" className="hover:text-cyan-600 transition-colors flex items-center">
         <Home size={16} className="mr-1" />
         <span className="sr-only">Accueil</span>
       </Link>
@@ -23,7 +23,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
         <React.Fragment key={index}>
           <ChevronRight size={14} className="mx-2 flex-shrink-0 text-gray-400" />
           {item.href ? (
-            <Link href={item.href} className="hover:text-indigo-600 transition-colors">
+            <Link href={item.href} className="hover:text-cyan-600 transition-colors">
               {item.label}
             </Link>
           ) : (

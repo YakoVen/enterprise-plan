@@ -66,7 +66,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-xl">
+      <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-xl">
 
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
@@ -90,7 +90,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
             <div className="lg:col-span-2 space-y-6">
 
               {/* Customer Info */}
-              <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+              <div className="bg-white p-5 rounded-md border border-gray-100 shadow-sm">
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Informations Client</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex items-start gap-3">
@@ -103,7 +103,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
                   <div className="flex items-start gap-3">
                     <Phone className="text-gray-400 mt-0.5" size={18} />
                     <div>
-                      <a href={`tel:${order.phone}`} className="text-sm font-medium text-indigo-600 hover:underline">{order.phone}</a>
+                      <a href={`tel:${order.phone}`} className="text-sm font-medium text-cyan-600 hover:underline">{order.phone}</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 sm:col-span-2">
@@ -111,7 +111,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
                     <div>
                       <p className="text-sm font-medium text-gray-900">{order.address || '—'}</p>
                       <p className="text-sm text-gray-500">{order.commune}, {order.wilaya}</p>
-                      <p className="text-xs text-indigo-600 font-medium mt-1 uppercase bg-indigo-50 inline-block px-2 py-0.5 rounded">
+                      <p className="text-xs text-cyan-600 font-medium mt-1 uppercase bg-cyan-50 inline-block px-2 py-0.5 rounded">
                         Livraison: {order.deliveryMethod === 'home' ? 'À domicile' : 'Point relais'}
                       </p>
                     </div>
@@ -120,7 +120,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
               </div>
 
               {/* Items */}
-              <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+              <div className="bg-white p-5 rounded-md border border-gray-100 shadow-sm">
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Articles ({order.items.length})</h3>
                 <div className="space-y-4">
                   {order.items.map((item, i) => (
@@ -146,7 +146,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
               </div>
 
               {/* Totals */}
-              <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm text-sm space-y-2">
+              <div className="bg-white p-5 rounded-md border border-gray-100 shadow-sm text-sm space-y-2">
                 <div className="flex justify-between text-gray-600"><span>Sous-total</span><span>{order.subtotal.toLocaleString()} DZD</span></div>
                 <div className="flex justify-between text-gray-600"><span>Livraison</span><span>{order.deliveryFee.toLocaleString()} DZD</span></div>
                 {order.discount > 0 && (
@@ -167,7 +167,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
               <ShipmentPanel order={order} onUpdated={onUpdated} />
 
               {/* Status Update & Notes */}
-              <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+              <div className="bg-white p-5 rounded-md border border-gray-100 shadow-sm">
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Mise à jour</h3>
 
                 <div className="space-y-4">
@@ -176,7 +176,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
                     <select
                       value={status}
                       onChange={(e) => setStatus(Number(e.target.value))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-600 focus:border-transparent bg-white"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cyan-600 focus:border-transparent bg-white"
                     >
                       {STATES.map((s) => (
                         <option key={s.value} value={s.value}>{s.label}</option>
@@ -191,14 +191,14 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
                       value={newNote}
                       onChange={(e) => setNewNote(e.target.value)}
                       placeholder="Ex: Expédié via Yalidine. Code: 1234..."
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-600 focus:border-transparent resize-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cyan-600 focus:border-transparent resize-none"
                     ></textarea>
                   </div>
 
                   <button
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors disabled:opacity-70"
+                    className="w-full flex items-center justify-center gap-2 bg-cyan-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-cyan-700 transition-colors disabled:opacity-70"
                   >
                     <Save size={16} /> {isSaving ? 'Sauvegarde...' : 'Sauvegarder'}
                   </button>
@@ -206,7 +206,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
               </div>
 
               {/* Timeline */}
-              <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+              <div className="bg-white p-5 rounded-md border border-gray-100 shadow-sm">
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Historique</h3>
                 <div className="space-y-4">
                   {history.length > 0 ? history.map((note, idx) => (
@@ -214,7 +214,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
                       {idx !== history.length - 1 && (
                         <div className="absolute left-[11px] top-6 bottom-[-16px] w-0.5 bg-gray-100"></div>
                       )}
-                      <div className="w-6 h-6 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 border-2 border-white z-10 relative">
+                      <div className="w-6 h-6 rounded-full bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0 border-2 border-white z-10 relative">
                         {idx === history.length - 1 ? <Clock size={12} /> : <MessageSquare size={12} />}
                       </div>
                       <div>

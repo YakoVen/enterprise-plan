@@ -118,7 +118,7 @@ export default function AddressPicker({
             value={wilayaCode ?? ''}
             onChange={(e) => handleWilayaChange(Number(e.target.value))}
             disabled={disabled || loadingWilayas}
-            className="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-indigo-600 disabled:bg-gray-50"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50"
           >
             <option value="">
               {loadingWilayas ? 'Chargement...' : 'Sélectionner...'}
@@ -144,7 +144,7 @@ export default function AddressPicker({
             value={communeName}
             onChange={(e) => onCommuneChange(e.target.value)}
             disabled={disabled || !wilayaCode || loadingCommunes}
-            className="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-indigo-600 disabled:bg-gray-50"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50"
           >
             <option value="">
               {!wilayaCode

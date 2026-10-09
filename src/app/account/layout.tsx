@@ -34,7 +34,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-cyan-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -50,9 +50,9 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Mobile Header */}
-        <div className="lg:hidden flex items-center justify-between bg-white p-4 rounded-xl shadow-sm mb-4 border border-gray-100">
+        <div className="lg:hidden flex items-center justify-between bg-white p-4 rounded-md shadow-sm mb-4 border border-gray-100">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm">
+            <div className="h-10 w-10 rounded-full bg-cyan-600 flex items-center justify-center text-white font-bold text-sm">
               {initials}
             </div>
             <p className="text-sm font-medium text-gray-900">{displayName}</p>
@@ -68,12 +68,12 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
         <div className="flex flex-col lg:flex-row lg:space-x-8">
           {/* Sidebar */}
           <aside className={`lg:w-64 flex-shrink-0 ${isMobileMenuOpen ? 'block' : 'hidden'} lg:block mb-6 lg:mb-0`}>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden sticky top-24">
+            <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden sticky top-24">
 
               {/* User info — desktop */}
               <div className="p-6 border-b border-gray-100 hidden lg:block">
                 <div className="flex items-center space-x-4">
-                  <div className="h-12 w-12 rounded-full bg-indigo-600 flex items-center justify-center text-white text-lg font-bold">
+                  <div className="h-12 w-12 rounded-full bg-cyan-600 flex items-center justify-center text-white text-lg font-bold">
                     {initials}
                   </div>
                   <div>
@@ -92,11 +92,11 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                       key={item.name}
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
-                        isActive ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600'
+                      className={`flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors ${
+                        isActive ? 'bg-cyan-50 text-cyan-700' : 'text-gray-700 hover:bg-gray-50 hover:text-cyan-600'
                       }`}
                     >
-                      <Icon className={`mr-3 h-5 w-5 ${isActive ? 'text-indigo-600' : 'text-gray-400'}`} />
+                      <Icon className={`mr-3 h-5 w-5 ${isActive ? 'text-cyan-600' : 'text-gray-400'}`} />
                       {item.name}
                     </Link>
                   );
@@ -106,7 +106,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
               <div className="p-4 border-t border-gray-100">
                 <button
                   onClick={handleLogout}
-                  className="flex w-full items-center px-4 py-3 text-sm font-medium text-red-600 rounded-xl hover:bg-red-50 transition-colors"
+                  className="flex w-full items-center px-4 py-3 text-sm font-medium text-red-600 rounded-md hover:bg-red-50 transition-colors"
                 >
                   <LogOut className="mr-3 h-5 w-5 text-red-500" />
                   Déconnexion

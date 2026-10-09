@@ -68,7 +68,7 @@ export default function ReviewsPage() {
   }
 
   if (loading) {
-    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-24 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-24 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   const tabs: { id: Tab; label: string }[] = [
@@ -84,7 +84,7 @@ export default function ReviewsPage() {
       <div className="flex border-b border-gray-200">
         {tabs.map((t) => (
           <button key={t.id} onClick={() => setActiveTab(t.id)}
-            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === t.id ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}>
+            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === t.id ? 'border-cyan-600 text-cyan-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}>
             {t.label}
           </button>
         ))}
@@ -93,14 +93,14 @@ export default function ReviewsPage() {
       <div className="space-y-4">
         {filteredReviews.length > 0 ? (
           filteredReviews.map((review) => (
-            <div key={review.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+            <div key={review.id} className="bg-white rounded-md shadow-sm border border-gray-100 p-5">
               <div className="flex justify-between items-start">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-bold text-gray-900">{review.authorName}</span>
                     <span className="text-gray-400 text-sm">• {review.date ? review.date.slice(0, 10) : ''}</span>
                   </div>
-                  <div className="text-sm text-indigo-600 font-medium mb-2">Produit : {titles[review.articleId] || review.articleId}</div>
+                  <div className="text-sm text-cyan-600 font-medium mb-2">Produit : {titles[review.articleId] || review.articleId}</div>
                   <div className="flex gap-1 mb-3">{renderStars(review.rating)}</div>
                   <p className="text-gray-700 text-sm">{review.text}</p>
                 </div>
@@ -121,7 +121,7 @@ export default function ReviewsPage() {
             </div>
           ))
         ) : (
-          <div className="bg-white rounded-xl border p-12 text-center text-gray-500">Aucun avis dans cet onglet.</div>
+          <div className="bg-white rounded-md border p-12 text-center text-gray-500">Aucun avis dans cet onglet.</div>
         )}
       </div>
     </div>

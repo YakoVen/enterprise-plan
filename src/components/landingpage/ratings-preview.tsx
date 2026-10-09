@@ -48,13 +48,13 @@ export default function RatingsPreview() {
 
   if (loading) {
     return (
-      <section className="py-12 bg-indigo-50/50 rounded-3xl px-6 my-12">
+      <section className="py-12 bg-cyan-50/50 rounded-3xl px-6 my-12">
         <div className="text-center mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Ce que disent nos clients</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-48 animate-pulse">
+            <div key={i} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-48 animate-pulse">
               <div className="h-4 bg-gray-200 rounded w-1/3 mb-4"></div>
               <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
               <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
@@ -69,7 +69,7 @@ export default function RatingsPreview() {
   if (reviews.length === 0) return null;
 
   return (
-    <section className="py-16 bg-gradient-to-b from-transparent to-indigo-50/30 rounded-3xl px-4 md:px-8 my-12">
+    <section className="py-16 bg-gradient-to-b from-transparent to-cyan-50/30 rounded-3xl px-4 md:px-8 my-12">
       <div className="text-center mb-12">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Ils nous font confiance</h2>
         <div className="flex items-center justify-center gap-1">
@@ -83,8 +83,8 @@ export default function RatingsPreview() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {reviews.map((review) => (
-          <div key={review.id} className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 relative">
-            <Quote className="absolute top-6 right-6 text-indigo-100" size={40} />
+          <div key={review.id} className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-100 relative">
+            <Quote className="absolute top-6 right-6 text-cyan-100" size={40} />
             <div className="flex gap-1 mb-4 relative z-10">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star 
@@ -96,7 +96,7 @@ export default function RatingsPreview() {
             </div>
             <p className="text-gray-600 mb-6 italic relative z-10 line-clamp-4">&quot;{review.text}&quot;</p>
             <div className="flex items-center gap-3 relative z-10">
-              <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
+              <div className="w-10 h-10 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-bold">
                 {review.authorName.charAt(0)}
               </div>
               <div>

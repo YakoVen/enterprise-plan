@@ -25,7 +25,7 @@ function AreaChart({ data, color }: { data: DayPoint[]; color: string }) {
       <polyline points={pts.join(' ')} fill="none" stroke={color} strokeWidth={2.5} strokeLinejoin="round" />
       {data.map((d, i) => (
         <circle key={d.key} cx={pad + i * stepX} cy={h - pad - (d.revenue / max) * (h - pad * 2)} r={3} fill={color}>
-          <title>{`${d.label}: ${d.revenue.toLocaleString()} DA`}</title>
+          <title>{`${d.label}: ${Math.round(d.revenue).toLocaleString()} DA`}</title>
         </circle>
       ))}
     </svg>
@@ -75,13 +75,13 @@ export default function AnalyticsPage() {
   const aov = useMemo(() => averageOrderValue(orders), [orders]);
 
   if (loading) {
-    return <div className="space-y-4">{[...Array(4)].map((_, i) => <div key={i} className="h-40 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(4)].map((_, i) => <div key={i} className="h-40 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   const kpis = [
-    { name: 'Revenu total', value: `${revenue.toLocaleString()} DA`, icon: DollarSign, bg: 'bg-green-100', color: 'text-green-600' },
-    { name: 'Commandes', value: orders.filter((o) => o.type !== 'failed').length, icon: ShoppingCart, bg: 'bg-indigo-100', color: 'text-indigo-600' },
-    { name: 'Panier moyen', value: `${aov.toLocaleString()} DA`, icon: Calculator, bg: 'bg-blue-100', color: 'text-blue-600' },
+    { name: 'Revenu total', value: `${Math.round(revenue).toLocaleString()} DA`, icon: DollarSign, bg: 'bg-green-100', color: 'text-green-600' },
+    { name: 'Commandes', value: orders.filter((o) => o.type !== 'failed').length, icon: ShoppingCart, bg: 'bg-cyan-100', color: 'text-cyan-600' },
+    { name: 'Panier moyen', value: `${Math.round(aov).toLocaleString()} DA`, icon: Calculator, bg: 'bg-blue-100', color: 'text-blue-600' },
     { name: 'Produits actifs', value: activeProducts, icon: Trophy, bg: 'bg-amber-100', color: 'text-amber-600' },
   ];
 
@@ -92,7 +92,7 @@ export default function AnalyticsPage() {
         <div className="flex gap-2">
           {[7, 14, 30].map((d) => (
             <button key={d} onClick={() => setDays(d)}
-              className={`px-4 py-2 rounded-xl text-sm font-medium ${days === d ? 'bg-indigo-600 text-white' : 'bg-white border text-gray-600 hover:bg-gray-50'}`}>
+              className={`px-4 py-2 rounded-md text-sm font-medium ${days === d ? 'bg-cyan-600 text-white' : 'bg-white border text-gray-600 hover:bg-gray-50'}`}>
               {d} jours
             </button>
           ))}
@@ -101,7 +101,7 @@ export default function AnalyticsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((k) => (
-          <div key={k.name} className="bg-white rounded-xl border p-5 flex items-center gap-4">
+          <div key={k.name} className="bg-white rounded-md border p-5 flex items-center gap-4">
             <div className={`p-3 rounded-lg ${k.bg}`}><k.icon className={`w-6 h-6 ${k.color}`} /></div>
             <div>
               <p className="text-sm text-gray-500">{k.name}</p>
@@ -112,12 +112,12 @@ export default function AnalyticsPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl border p-6">
+        <div className="bg-white rounded-md border p-6">
           <h2 className="font-bold mb-1">Revenu ({days} jours)</h2>
-          <p className="text-sm text-gray-500 mb-4">Total: {series.reduce((s, d) => s + d.revenue, 0).toLocaleString()} DA</p>
+          <p className="text-sm text-gray-500 mb-4">Total: {Math.round(series.reduce((s, d) => s + d.revenue, 0)).toLocaleString()} DA</p>
           <AreaChart data={series} color="#4f46e5" />
         </div>
-        <div className="bg-white rounded-xl border p-6">
+        <div className="bg-white rounded-md border p-6">
           <h2 className="font-bold mb-1">Commandes ({days} jours)</h2>
           <p className="text-sm text-gray-500 mb-4">En attente: {statuses.pending} • Livrées: {statuses.delivered}</p>
           <BarChart data={series} color="#10b981" />
@@ -125,7 +125,7 @@ export default function AnalyticsPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl border overflow-hidden">
+        <div className="bg-white rounded-md border overflow-hidden">
           <h2 className="font-bold p-6 pb-2">Meilleures ventes</h2>
           <table className="w-full text-sm">
             <tbody className="divide-y">
@@ -134,14 +134,14 @@ export default function AnalyticsPage() {
                   <td className="px-6 py-3 font-bold text-gray-400">#{i + 1}</td>
                   <td className="px-2 py-3 font-medium truncate max-w-[180px]">{s.title}</td>
                   <td className="px-2 py-3 text-gray-500">{s.quantity} vendus</td>
-                  <td className="px-6 py-3 text-right font-bold">{s.revenue.toLocaleString()} DA</td>
+                  <td className="px-6 py-3 text-right font-bold">{Math.round(s.revenue).toLocaleString()} DA</td>
                 </tr>
               ))}
               {sellers.length === 0 && <tr><td className="px-6 py-8 text-center text-gray-500">Aucune vente pour le moment.</td></tr>}
             </tbody>
           </table>
         </div>
-        <div className="bg-white rounded-xl border overflow-hidden">
+        <div className="bg-white rounded-md border overflow-hidden">
           <h2 className="font-bold p-6 pb-2">Commandes par wilaya</h2>
           <table className="w-full text-sm">
             <tbody className="divide-y">
@@ -149,7 +149,7 @@ export default function AnalyticsPage() {
                 <tr key={w.wilaya} className="hover:bg-gray-50">
                   <td className="px-6 py-3 font-medium">{w.wilaya}</td>
                   <td className="px-2 py-3 text-gray-500">{w.orders} commandes</td>
-                  <td className="px-6 py-3 text-right font-bold">{w.revenue.toLocaleString()} DA</td>
+                  <td className="px-6 py-3 text-right font-bold">{Math.round(w.revenue).toLocaleString()} DA</td>
                 </tr>
               ))}
               {wilayas.length === 0 && <tr><td className="px-6 py-8 text-center text-gray-500">Aucune commande pour le moment.</td></tr>}

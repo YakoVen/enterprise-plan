@@ -129,7 +129,7 @@ export default function StopDeskPicker({
           // Desk id + the desk's commune: covers couriers that route by either.
           onChange(e.target.value, desk?.name ?? '', desk?.communeName || communeName);
         }}
-        className="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-indigo-600"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-cyan-600"
       >
         <option value="">Choisir un bureau...</option>
         {desks.map((desk) => (

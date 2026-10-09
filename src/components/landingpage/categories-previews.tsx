@@ -15,7 +15,7 @@ export default function CategoriesPreviews() {
     <section className="py-12">
       <div className="flex justify-between items-end mb-8">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Parcourir par catégorie</h2>
-        <Link href="/categories" className="text-indigo-600 font-medium hover:underline hidden sm:block">
+        <Link href="/categories" className="text-cyan-600 font-medium hover:underline hidden sm:block">
           Voir tout
         </Link>
       </div>
@@ -25,7 +25,7 @@ export default function CategoriesPreviews() {
           <Link
             key={category.id}
             href={`/articles?category=${category.name.toLowerCase()}`}
-            className={`flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-300 ${category.color} ${category.hover} shadow-sm hover:shadow-md`}
+            className={`flex flex-col items-center justify-center p-6 rounded-lg transition-all duration-300 ${category.color} ${category.hover} shadow-sm hover:shadow-md`}
           >
             <span className="text-4xl mb-3">{category.icon}</span>
             <span className="font-semibold text-center text-sm md:text-base">{category.name}</span>

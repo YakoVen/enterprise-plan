@@ -83,18 +83,18 @@ export default function ProfilePage() {
   };
 
   if (authLoading) {
-    return <div className="h-40 bg-gray-100 rounded-xl animate-pulse" />;
+    return <div className="h-40 bg-gray-100 rounded-md animate-pulse" />;
   }
 
   return (
     <div className="space-y-8">
       <h1 className="text-2xl font-bold text-gray-900">Mon Profil</h1>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-6 sm:p-8">
           <div className="flex items-center space-x-6 mb-8">
             <div className="relative">
-              <div className="h-24 w-24 rounded-full bg-indigo-600 flex items-center justify-center text-white text-3xl font-bold">
+              <div className="h-24 w-24 rounded-full bg-cyan-600 flex items-center justify-center text-white text-3xl font-bold">
                 {initials}
               </div>
               <div className="absolute bottom-0 right-0 h-8 w-8 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-400">
@@ -118,7 +118,7 @@ export default function ProfilePage() {
                   id="fullName"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="mt-1 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border py-2 px-3 outline-none"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border py-2 px-3 outline-none"
                 />
               </div>
 
@@ -131,7 +131,7 @@ export default function ProfilePage() {
                   id="email"
                   value={userProfile?.email || currentUser?.email || ''}
                   disabled
-                  className="mt-1 block w-full border-gray-300 rounded-xl shadow-sm bg-gray-50 text-gray-500 sm:text-sm border py-2 px-3 outline-none cursor-not-allowed"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-50 text-gray-500 sm:text-sm border py-2 px-3 outline-none cursor-not-allowed"
                 />
                 <p className="mt-1 text-xs text-gray-500">L&apos;email ne peut pas être modifié.</p>
               </div>
@@ -145,7 +145,7 @@ export default function ProfilePage() {
                   id="phone"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="mt-1 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border py-2 px-3 outline-none"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border py-2 px-3 outline-none"
                 />
               </div>
             </div>
@@ -154,7 +154,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-50"
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-colors disabled:opacity-50"
               >
                 <Save className="mr-2 h-4 w-4" />
                 {loading ? 'Sauvegarde...' : 'Sauvegarder les modifications'}
@@ -164,7 +164,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-6 sm:p-8">
           <div className="flex items-center space-x-2 mb-6">
             <KeyRound className="h-5 w-5 text-gray-400" />
@@ -181,7 +181,7 @@ export default function ProfilePage() {
                 id="current-password"
                 value={currentPw}
                 onChange={(e) => setCurrentPw(e.target.value)}
-                className="mt-1 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border py-2 px-3 outline-none"
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border py-2 px-3 outline-none"
               />
             </div>
 
@@ -195,7 +195,7 @@ export default function ProfilePage() {
                   id="new-password"
                   value={newPw}
                   onChange={(e) => setNewPw(e.target.value)}
-                  className="mt-1 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border py-2 px-3 outline-none"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border py-2 px-3 outline-none"
                 />
               </div>
 
@@ -208,7 +208,7 @@ export default function ProfilePage() {
                   id="confirm-password"
                   value={confirmPw}
                   onChange={(e) => setConfirmPw(e.target.value)}
-                  className="mt-1 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border py-2 px-3 outline-none"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border py-2 px-3 outline-none"
                 />
               </div>
             </div>
@@ -217,7 +217,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={pwLoading}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-xl shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-50"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-colors disabled:opacity-50"
               >
                 {pwLoading ? 'Mise à jour...' : 'Mettre à jour le mot de passe'}
               </button>

@@ -51,7 +51,7 @@ export default function SettingsPage() {
   };
 
   if (loading) {
-    return <div className="h-40 bg-gray-100 rounded-xl animate-pulse max-w-3xl" />;
+    return <div className="h-40 bg-gray-100 rounded-md animate-pulse max-w-3xl" />;
   }
 
   return (
@@ -60,7 +60,7 @@ export default function SettingsPage() {
 
       <form onSubmit={handleSave} className="space-y-6">
         
-        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+        <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-4">
           <h2 className="text-lg font-bold text-gray-900 mb-4">Informations générales</h2>
           
           <div>
@@ -70,7 +70,7 @@ export default function SettingsPage() {
               required
               value={formData.storeName}
               onChange={e => setFormData({...formData, storeName: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
             />
           </div>
 
@@ -81,7 +81,7 @@ export default function SettingsPage() {
                 type="text" 
                 value={formData.contactPhone}
                 onChange={e => setFormData({...formData, contactPhone: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               />
             </div>
             <div>
@@ -90,7 +90,7 @@ export default function SettingsPage() {
                 type="email" 
                 value={formData.contactEmail}
                 onChange={e => setFormData({...formData, contactEmail: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               />
             </div>
           </div>
@@ -101,12 +101,12 @@ export default function SettingsPage() {
               rows={2}
               value={formData.address}
               onChange={e => setFormData({...formData, address: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
             />
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+        <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-4">
           <h2 className="text-lg font-bold text-gray-900 mb-4">Notifications Admin</h2>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Email pour les alertes (Nouvelle commande, Échec, etc.)</label>
@@ -114,13 +114,13 @@ export default function SettingsPage() {
               type="email" 
               value={formData.adminEmail}
               onChange={e => setFormData({...formData, adminEmail: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
             />
             <p className="text-xs text-gray-500 mt-1">Cet email recevra toutes les notifications du système via Resend.</p>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+        <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-4">
           <h2 className="text-lg font-bold text-gray-900 mb-4">Réseaux sociaux</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -129,7 +129,7 @@ export default function SettingsPage() {
                 type="url" 
                 value={formData.facebookUrl}
                 onChange={e => setFormData({...formData, facebookUrl: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               />
             </div>
             <div>
@@ -138,7 +138,7 @@ export default function SettingsPage() {
                 type="url" 
                 value={formData.instagramUrl}
                 onChange={e => setFormData({...formData, instagramUrl: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               />
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function SettingsPage() {
           <button 
             type="submit" 
             disabled={isSaving}
-            className="px-6 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2 disabled:opacity-70"
+            className="px-6 py-2.5 bg-cyan-600 text-white rounded-lg font-medium hover:bg-cyan-700 transition-colors flex items-center gap-2 disabled:opacity-70"
           >
             {isSaving ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

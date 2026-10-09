@@ -83,7 +83,7 @@ export default function OrderTable() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden">
       {/* Table Controls */}
       <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50/50">
         <div className="flex items-center gap-4 w-full sm:w-auto">
@@ -92,7 +92,7 @@ export default function OrderTable() {
             <input
               type="text"
               placeholder="Rechercher (ID, nom, tel)..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               value={searchTerm}
               onChange={(e) => { setSearchTerm(e.target.value); setPage(0); }}
             />
@@ -100,7 +100,7 @@ export default function OrderTable() {
           <div className="relative">
             <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <select
-              className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg text-sm appearance-none bg-white focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg text-sm appearance-none bg-white focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               value={statusFilter}
               onChange={(e) => { setStatusFilter(e.target.value); setPage(0); }}
             >
@@ -161,7 +161,7 @@ export default function OrderTable() {
                   <td className="p-4 text-right">
                     <button
                       onClick={() => setSelectedOrder(order)}
-                      className="p-2 text-gray-400 hover:text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors inline-flex"
+                      className="p-2 text-gray-400 hover:text-cyan-600 rounded-lg hover:bg-cyan-50 transition-colors inline-flex"
                       title="Voir les détails"
                     >
                       <Eye size={18} />

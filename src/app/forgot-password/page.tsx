@@ -30,8 +30,8 @@ export default function ForgotPasswordPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <div className="h-12 w-12 bg-indigo-100 rounded-full flex items-center justify-center">
-            <KeyRound className="h-6 w-6 text-indigo-600" />
+          <div className="h-12 w-12 bg-cyan-100 rounded-full flex items-center justify-center">
+            <KeyRound className="h-6 w-6 text-cyan-600" />
           </div>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -43,10 +43,10 @@ export default function ForgotPasswordPage() {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-xl sm:px-10 border border-gray-100">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-md sm:px-10 border border-gray-100">
           
           {error && (
-            <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl flex items-center text-sm">
+            <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md flex items-center text-sm">
               <AlertCircle className="h-5 w-5 mr-2" />
               {error}
             </div>
@@ -61,7 +61,7 @@ export default function ForgotPasswordPage() {
               </p>
               <Link 
                 href="/login" 
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-colors"
               >
                 Retour à la connexion
               </Link>
@@ -84,7 +84,7 @@ export default function ForgotPasswordPage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-xl py-3 border outline-none"
+                    className="focus:ring-cyan-500 focus:border-cyan-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-3 border outline-none"
                     placeholder="vous@exemple.com"
                   />
                 </div>
@@ -94,7 +94,7 @@ export default function ForgotPasswordPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-colors"
+                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 disabled:opacity-50 transition-colors"
                 >
                   {loading ? 'Envoi en cours...' : 'Envoyer le lien'}
                 </button>
@@ -104,7 +104,7 @@ export default function ForgotPasswordPage() {
 
           {!success && (
             <div className="mt-6 text-center text-sm">
-              <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500 flex items-center justify-center">
+              <Link href="/login" className="font-medium text-cyan-600 hover:text-cyan-500 flex items-center justify-center">
                 <ArrowLeft className="h-4 w-4 mr-1" />
                 Retour à la connexion
               </Link>

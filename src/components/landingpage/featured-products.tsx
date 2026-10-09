@@ -18,7 +18,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Produits Vedettes</h2>
           <p className="text-gray-600">Découvrez notre sélection des meilleurs articles du moment.</p>
         </div>
-        <Link href="/articles" className="group flex items-center text-indigo-600 font-semibold hover:text-indigo-700 transition-colors hidden sm:flex">
+        <Link href="/articles" className="group flex items-center text-cyan-600 font-semibold hover:text-cyan-700 transition-colors hidden sm:flex">
           Voir tout
           <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
         </Link>
@@ -31,7 +31,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
       </div>
       
       <div className="mt-8 text-center sm:hidden">
-        <Link href="/articles" className="inline-flex items-center justify-center px-6 py-3 w-full border-2 border-indigo-100 text-indigo-600 font-semibold rounded-xl hover:bg-indigo-50 transition-colors">
+        <Link href="/articles" className="inline-flex items-center justify-center px-6 py-3 w-full border-2 border-cyan-100 text-cyan-600 font-semibold rounded-md hover:bg-cyan-50 transition-colors">
           Voir tous les produits
         </Link>
       </div>

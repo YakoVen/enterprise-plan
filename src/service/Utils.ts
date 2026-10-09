@@ -5,7 +5,7 @@ export async function urlToFile(url: string, filename: string): Promise<File> {
 }
 
 export function formatPrice(price: number): string {
-  return `${price.toLocaleString('fr-DZ')} DA`;
+  return `${Math.round(price).toLocaleString('fr-DZ')} DA`;
 }
 
 export function calculateDiscount(originalPrice: number, salePrice: number): number {

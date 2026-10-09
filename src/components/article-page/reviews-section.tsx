@@ -74,11 +74,11 @@ export default function ReviewsSection({ articleId }: { articleId: string }) {
       </h2>
 
       {loading ? (
-        <div className="h-24 bg-gray-100 rounded-xl animate-pulse" />
+        <div className="h-24 bg-gray-100 rounded-md animate-pulse" />
       ) : reviews.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {reviews.map((r) => (
-            <div key={r.id} className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-3">
+            <div key={r.id} className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-gray-900">{r.authorName}</span>
                 <span className="text-sm text-gray-500">{r.date ? r.date.slice(0, 10) : ''}</span>
@@ -92,17 +92,17 @@ export default function ReviewsSection({ articleId }: { articleId: string }) {
         <p className="text-gray-500">Aucun avis pour le moment. Soyez le premier !</p>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4 max-w-2xl">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-4 max-w-2xl">
         <h3 className="font-bold text-gray-900">Laisser un avis</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input value={authorName} onChange={(e) => setAuthorName(e.target.value)}
-            placeholder="Votre nom" className="border rounded-xl px-3 py-2" required />
+            placeholder="Votre nom" className="border rounded-md px-3 py-2" required />
           <div className="flex items-center"><Stars value={rating} onPick={setRating} /></div>
         </div>
         <textarea value={text} onChange={(e) => setText(e.target.value)} rows={3}
-          placeholder="Votre avis..." className="w-full border rounded-xl px-3 py-2" required />
+          placeholder="Votre avis..." className="w-full border rounded-md px-3 py-2" required />
         <button type="submit" disabled={sending}
-          className="bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-indigo-700 disabled:opacity-50">
+          className="bg-cyan-600 text-white px-6 py-2.5 rounded-md font-bold hover:bg-cyan-700 disabled:opacity-50">
           {sending ? 'Envoi...' : 'Publier mon avis'}
         </button>
       </form>

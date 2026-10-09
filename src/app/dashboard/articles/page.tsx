@@ -121,7 +121,7 @@ export default function ArticlesPage() {
   };
 
   if (loading) {
-    return <div className="space-y-4">{[...Array(5)].map((_, i) => <div key={i} className="h-16 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(5)].map((_, i) => <div key={i} className="h-16 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   return (
@@ -136,20 +136,20 @@ export default function ArticlesPage() {
           <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 bg-white">
             <Download size={16} /> Exporter
           </button>
-          <Link href="/dashboard/articles/add" className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700">
+          <Link href="/dashboard/articles/add" className="flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white rounded-lg text-sm font-medium hover:bg-cyan-700">
             <Plus size={16} /> Ajouter
           </Link>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-4 border-b border-gray-100 bg-gray-50/50">
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <input
               type="text"
               placeholder="Rechercher un article..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -191,7 +191,7 @@ export default function ArticlesPage() {
                       <AvailableButton isActive={article.active} onClick={() => toggleActive(article.id, article.active)} />
                     </td>
                     <td className="p-4 text-right space-x-2">
-                      <Link href={`/dashboard/articles/${article.id}`} className="p-2 text-gray-400 hover:text-indigo-600 transition-colors inline-flex">
+                      <Link href={`/dashboard/articles/${article.id}`} className="p-2 text-gray-400 hover:text-cyan-600 transition-colors inline-flex">
                         <Edit size={18} />
                       </Link>
                       <button onClick={() => setDeleteId(article.id)} className="p-2 text-gray-400 hover:text-red-600 transition-colors inline-flex">
@@ -211,12 +211,12 @@ export default function ArticlesPage() {
 
       {deleteId && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-sm w-full">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full">
             <h3 className="font-bold mb-2">Supprimer cet article ?</h3>
             <p className="text-sm text-gray-500 mb-4">Cette action est irréversible.</p>
             <div className="flex justify-end gap-2">
-              <button onClick={() => setDeleteId(null)} className="px-4 py-2 border rounded-xl text-sm">Annuler</button>
-              <button onClick={handleDelete} className="px-4 py-2 bg-red-600 text-white rounded-xl text-sm font-bold hover:bg-red-700">Supprimer</button>
+              <button onClick={() => setDeleteId(null)} className="px-4 py-2 border rounded-md text-sm">Annuler</button>
+              <button onClick={handleDelete} className="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-bold hover:bg-red-700">Supprimer</button>
             </div>
           </div>
         </div>

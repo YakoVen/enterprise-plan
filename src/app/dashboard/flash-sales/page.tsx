@@ -129,14 +129,14 @@ export default function FlashSalesPage() {
   }
 
   if (loading) {
-    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-20 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-20 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Ventes flash</h1>
-        <button onClick={() => openModal()} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700">
+        <button onClick={() => openModal()} className="flex items-center gap-2 bg-cyan-600 text-white px-4 py-2 rounded-md hover:bg-cyan-700">
           <Plus size={18} /> Nouvelle vente
         </button>
       </div>
@@ -146,7 +146,7 @@ export default function FlashSalesPage() {
           const live = isSaleLive(s);
           const revenue = saleRevenue(s, orders);
           return (
-            <div key={s.id} className="bg-white rounded-xl border p-5">
+            <div key={s.id} className="bg-white rounded-md border p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-lg ${live ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-400'}`}>
@@ -164,7 +164,7 @@ export default function FlashSalesPage() {
                     <span className="text-xs font-bold text-gray-400">{new Date(s.endsAt) < new Date() ? 'Terminée' : s.active ? 'Programmée' : 'Inactive'}</span>
                   )}
                   <AvailableButton isActive={s.active} onClick={() => handleToggle(s)} />
-                  <button onClick={() => openModal(s)} className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg"><Edit size={16} /></button>
+                  <button onClick={() => openModal(s)} className="p-2 text-cyan-600 hover:bg-cyan-50 rounded-lg"><Edit size={16} /></button>
                   <button onClick={() => handleDelete(s.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 size={16} /></button>
                 </div>
               </div>
@@ -172,13 +172,13 @@ export default function FlashSalesPage() {
           );
         })}
         {sales.length === 0 && (
-          <div className="bg-white rounded-xl border p-12 text-center text-gray-500">Aucune vente flash. Créez-en une pour booster vos ventes.</div>
+          <div className="bg-white rounded-md border p-12 text-center text-gray-500">Aucune vente flash. Créez-en une pour booster vos ventes.</div>
         )}
       </div>
 
       {modal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <form onSubmit={handleSave} className="bg-white rounded-2xl p-6 w-full max-w-lg space-y-4 max-h-[90vh] overflow-y-auto">
+          <form onSubmit={handleSave} className="bg-white rounded-lg p-6 w-full max-w-lg space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-bold">{editingId ? 'Modifier' : 'Nouvelle'} vente flash</h2>
               <button type="button" onClick={() => setModal(false)}><X size={20} /></button>
@@ -186,13 +186,13 @@ export default function FlashSalesPage() {
             <div>
               <label className="block text-sm font-medium mb-1">Nom</label>
               <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full border rounded-xl px-3 py-2" placeholder="Flash Weekend" required />
+                className="w-full border rounded-md px-3 py-2" placeholder="Flash Weekend" required />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Type</label>
                 <select value={form.discountType} onChange={(e) => setForm({ ...form, discountType: e.target.value as FlashSale['discountType'] })}
-                  className="w-full border rounded-xl px-3 py-2 bg-white">
+                  className="w-full border rounded-md px-3 py-2 bg-white">
                   <option value="percentage">% Pourcentage</option>
                   <option value="fixed">DA Fixe</option>
                 </select>
@@ -200,31 +200,31 @@ export default function FlashSalesPage() {
               <div>
                 <label className="block text-sm font-medium mb-1">Valeur</label>
                 <input type="number" min={1} value={form.value} onChange={(e) => setForm({ ...form, value: Number(e.target.value) })}
-                  className="w-full border rounded-xl px-3 py-2" required />
+                  className="w-full border rounded-md px-3 py-2" required />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">Début</label>
                 <input type="datetime-local" value={form.startsAt} onChange={(e) => setForm({ ...form, startsAt: e.target.value })}
-                  className="w-full border rounded-xl px-3 py-2" required />
+                  className="w-full border rounded-md px-3 py-2" required />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">Fin</label>
                 <input type="datetime-local" value={form.endsAt} onChange={(e) => setForm({ ...form, endsAt: e.target.value })}
-                  className="w-full border rounded-xl px-3 py-2" required />
+                  className="w-full border rounded-md px-3 py-2" required />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Texte bannière (optionnel)</label>
               <input value={form.bannerText} onChange={(e) => setForm({ ...form, bannerText: e.target.value })}
-                className="w-full border rounded-xl px-3 py-2" placeholder="-30% ce weekend seulement !" />
+                className="w-full border rounded-md px-3 py-2" placeholder="-30% ce weekend seulement !" />
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Produits ({form.productIds.length} sélectionnés)</label>
-              <div className="border rounded-xl max-h-48 overflow-y-auto divide-y">
+              <div className="border rounded-md max-h-48 overflow-y-auto divide-y">
                 {products.map((p) => (
                   <label key={p.id} className="flex items-center gap-3 px-3 py-2 hover:bg-gray-50 cursor-pointer text-sm">
                     <input type="checkbox" checked={form.productIds.includes(p.id)} onChange={() => toggleProduct(p.id)}
-                      className="rounded text-indigo-600" />
+                      className="rounded text-cyan-600" />
                     <span className="flex-1 truncate">{p.title}</span>
                     <span className="text-gray-500">{p.price.toLocaleString()} DA</span>
                   </label>
@@ -234,10 +234,10 @@ export default function FlashSalesPage() {
             </div>
             <label className="flex items-center gap-2 text-sm">
               <input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })}
-                className="rounded text-indigo-600" /> Actif
+                className="rounded text-cyan-600" /> Actif
             </label>
             <p className="text-xs text-gray-500">Les prix reviennent automatiquement à la normale hors période — aucune action requise.</p>
-            <button type="submit" disabled={saving} className="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 disabled:opacity-50">
+            <button type="submit" disabled={saving} className="w-full bg-cyan-600 text-white py-3 rounded-md font-bold hover:bg-cyan-700 disabled:opacity-50">
               {saving ? 'Sauvegarde...' : 'Sauvegarder'}
             </button>
           </form>

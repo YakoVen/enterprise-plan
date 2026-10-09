@@ -43,10 +43,10 @@ export default function FilterBar({ filters, setFilters, onClose }: FilterBarPro
   };
 
   return (
-    <div className="w-full bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-8">
+    <div className="w-full bg-white rounded-md shadow-sm border border-gray-100 p-6 space-y-8">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold flex items-center gap-2">
-          <Filter className="w-5 h-5 text-indigo-600" />
+          <Filter className="w-5 h-5 text-cyan-600" />
           Filtres
         </h2>
         {onClose && (
@@ -65,7 +65,7 @@ export default function FilterBar({ filters, setFilters, onClose }: FilterBarPro
                 type="checkbox"
                 checked={filters.categories.includes(cat.id)}
                 onChange={() => handleCategoryChange(cat.id)}
-                className="w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-600"
+                className="w-4 h-4 text-cyan-600 rounded border-gray-300 focus:ring-cyan-600"
               />
               <span className="text-gray-600">{cat.label}</span>
             </label>
@@ -81,7 +81,7 @@ export default function FilterBar({ filters, setFilters, onClose }: FilterBarPro
             placeholder="Min"
             value={filters.minPrice}
             onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
           />
           <span className="text-gray-500">-</span>
           <input
@@ -89,7 +89,7 @@ export default function FilterBar({ filters, setFilters, onClose }: FilterBarPro
             placeholder="Max"
             value={filters.maxPrice}
             onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
           />
         </div>
       </div>
@@ -101,7 +101,7 @@ export default function FilterBar({ filters, setFilters, onClose }: FilterBarPro
             type="checkbox"
             checked={filters.inStock}
             onChange={(e) => setFilters({ ...filters, inStock: e.target.checked })}
-            className="w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-600"
+            className="w-4 h-4 text-cyan-600 rounded border-gray-300 focus:ring-cyan-600"
           />
           <span className="text-gray-600">En stock uniquement</span>
         </label>
@@ -131,13 +131,13 @@ export default function FilterBar({ filters, setFilters, onClose }: FilterBarPro
           placeholder="Rechercher une marque..."
           value={filters.brand}
           onChange={(e) => setFilters({ ...filters, brand: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
         />
       </div>
 
       <button
         onClick={resetFilters}
-        className="w-full py-2.5 px-4 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
+        className="w-full py-2.5 px-4 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
       >
         Réinitialiser les filtres
       </button>

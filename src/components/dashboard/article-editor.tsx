@@ -139,13 +139,13 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
   };
 
   if (loading) {
-    return <div className="h-64 bg-gray-100 rounded-xl animate-pulse max-w-4xl" />;
+    return <div className="h-64 bg-gray-100 rounded-md animate-pulse max-w-4xl" />;
   }
 
   return (
     <form onSubmit={handleSave} className="space-y-6">
       {/* Main Info */}
-      <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+      <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-4">
         <h2 className="text-lg font-bold text-gray-900 mb-4">Informations générales</h2>
 
         <div>
@@ -155,7 +155,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
             required
             value={formData.title}
             onChange={e => setFormData({...formData, title: e.target.value})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
           />
         </div>
 
@@ -165,7 +165,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
             rows={4}
             value={formData.description}
             onChange={e => setFormData({...formData, description: e.target.value})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
           />
         </div>
 
@@ -178,7 +178,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
               min={1}
               value={formData.price}
               onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
             />
           </div>
           <div>
@@ -188,7 +188,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
               min={0}
               value={formData.oldPrice}
               onChange={e => setFormData({...formData, oldPrice: parseFloat(e.target.value)})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
             />
           </div>
           {!hasVariants && (
@@ -200,7 +200,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
                 min={0}
                 value={formData.stock}
                 onChange={e => setFormData({...formData, stock: parseInt(e.target.value) || 0})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               />
             </div>
           )}
@@ -208,12 +208,12 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
 
         <label className="flex items-center gap-2 text-sm font-medium">
           <input type="checkbox" checked={formData.active} onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
-            className="rounded text-indigo-600" /> Visible en boutique
+            className="rounded text-cyan-600" /> Visible en boutique
         </label>
       </div>
 
       {/* Organization */}
-      <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+      <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-4">
         <h2 className="text-lg font-bold text-gray-900 mb-4">Organisation</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
@@ -231,7 +231,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
               type="text"
               value={formData.brand}
               onChange={e => setFormData({...formData, brand: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
             />
           </div>
           <div>
@@ -240,7 +240,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
               type="text"
               value={formData.collection}
               onChange={e => setFormData({...formData, collection: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               placeholder="Ex: Été 2026"
             />
           </div>
@@ -248,16 +248,16 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
       </div>
 
       {/* Variants */}
-      <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+      <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-4">
         <label className="flex items-center justify-between cursor-pointer">
           <h2 className="text-lg font-bold text-gray-900">Variantes</h2>
           <input type="checkbox" checked={hasVariants} onChange={(e) => setHasVariants(e.target.checked)}
-            className="rounded text-indigo-600 w-5 h-5" />
+            className="rounded text-cyan-600 w-5 h-5" />
         </label>
         {hasVariants && (
           <div className="space-y-3">
             {variants.map((v) => (
-              <div key={v.id} className="flex flex-wrap gap-2 items-center bg-gray-50 p-3 rounded-xl">
+              <div key={v.id} className="flex flex-wrap gap-2 items-center bg-gray-50 p-3 rounded-md">
                 <input value={v.name} onChange={(e) => updateVariant(v.id, { name: e.target.value })}
                   placeholder="Nom (ex: Rouge / M)" className="flex-1 min-w-[140px] border rounded-lg px-2 py-1.5 text-sm" />
                 <select value={v.type} onChange={(e) => updateVariant(v.id, { type: e.target.value })}
@@ -279,7 +279,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
                 </button>
               </div>
             ))}
-            <button type="button" onClick={addVariant} className="flex items-center gap-2 text-indigo-600 text-sm font-medium hover:underline">
+            <button type="button" onClick={addVariant} className="flex items-center gap-2 text-cyan-600 text-sm font-medium hover:underline">
               <Plus size={16} /> Ajouter une variante
             </button>
           </div>
@@ -287,7 +287,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
       </div>
 
       {/* Media */}
-      <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+      <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm">
         <h2 className="text-lg font-bold text-gray-900 mb-4">Images</h2>
         <div className="flex flex-wrap gap-4">
           {images.map((img, idx) => (
@@ -300,11 +300,11 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
               >
                 <X size={12} />
               </button>
-              {idx === 0 && <span className="absolute bottom-1 left-1 text-[10px] bg-indigo-600 text-white px-1.5 rounded">Principale</span>}
+              {idx === 0 && <span className="absolute bottom-1 left-1 text-[10px] bg-cyan-600 text-white px-1.5 rounded">Principale</span>}
             </div>
           ))}
-          <label className="w-24 h-24 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:text-indigo-600 hover:border-indigo-600 cursor-pointer transition-colors">
-            {uploading ? <span className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" /> : <Upload size={24} />}
+          <label className="w-24 h-24 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:text-cyan-600 hover:border-cyan-600 cursor-pointer transition-colors">
+            {uploading ? <span className="w-6 h-6 border-2 border-cyan-600 border-t-transparent rounded-full animate-spin" /> : <Upload size={24} />}
             <span className="text-xs mt-1">Ajouter</span>
             <input type="file" className="hidden" multiple accept="image/*" onChange={(e) => handleFiles(e.target.files)} />
           </label>
@@ -312,7 +312,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
       </div>
 
       {/* SEO */}
-      <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+      <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm space-y-4">
         <h2 className="text-lg font-bold text-gray-900 mb-4">Référencement (SEO)</h2>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Titre SEO</label>
@@ -320,7 +320,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
             type="text"
             value={formData.seoTitle}
             onChange={e => setFormData({...formData, seoTitle: e.target.value})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
             placeholder="Titre pour les moteurs de recherche"
           />
         </div>
@@ -330,7 +330,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
             rows={2}
             value={formData.seoDescription}
             onChange={e => setFormData({...formData, seoDescription: e.target.value})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
             placeholder="Description meta pour les moteurs de recherche"
           />
         </div>
@@ -347,7 +347,7 @@ export default function ArticleEditor({ mode, articleId }: ArticleEditorProps) {
         <button
           type="submit"
           disabled={isSaving || uploading}
-          className="px-6 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2 disabled:opacity-70"
+          className="px-6 py-2.5 bg-cyan-600 text-white rounded-lg font-medium hover:bg-cyan-700 transition-colors flex items-center gap-2 disabled:opacity-70"
         >
           {isSaving ? (
             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

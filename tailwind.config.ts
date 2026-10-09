@@ -11,6 +11,10 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        platform: "#020617",
+      },
+      fontFamily: {
+        sans: ["Space Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
       },
     },
   },

@@ -73,7 +73,7 @@ export default function BundlesPage() {
   }
 
   if (loading) {
-    return <div className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-6">{[...Array(2)].map((_, i) => <div key={i} className="h-48 bg-gray-100 rounded-2xl animate-pulse" />)}</div>;
+    return <div className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-6">{[...Array(2)].map((_, i) => <div key={i} className="h-48 bg-gray-100 rounded-lg animate-pulse" />)}</div>;
   }
 
   return (
@@ -82,10 +82,10 @@ export default function BundlesPage() {
       <p className="text-gray-500 mb-8">Des produits groupés à prix réduit. Disponible uniquement si tous les articles sont en stock.</p>
 
       {bundles.length === 0 ? (
-        <div className="bg-white rounded-2xl border p-12 text-center">
+        <div className="bg-white rounded-lg border p-12 text-center">
           <Package className="w-12 h-12 text-gray-300 mx-auto mb-4" />
           <p className="text-gray-500">Aucun lot disponible pour le moment.</p>
-          <Link href="/articles" className="text-indigo-600 font-medium hover:underline">Voir la boutique</Link>
+          <Link href="/articles" className="text-cyan-600 font-medium hover:underline">Voir la boutique</Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -95,7 +95,7 @@ export default function BundlesPage() {
             const savings = Math.max(sum - b.bundlePrice, 0);
             const inStock = bundleStock(b) > 0;
             return (
-              <div key={b.id} className="bg-white rounded-2xl border overflow-hidden">
+              <div key={b.id} className="bg-white rounded-lg border overflow-hidden">
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-2">
                     <h2 className="text-xl font-bold">{b.name}</h2>
@@ -114,10 +114,10 @@ export default function BundlesPage() {
                   <div className="flex items-center justify-between pt-4 border-t">
                     <div>
                       {sum > b.bundlePrice && <span className="text-sm text-gray-400 line-through block">{sum.toLocaleString()} DA</span>}
-                      <span className="text-2xl font-bold text-indigo-600">{b.bundlePrice.toLocaleString()} DA</span>
+                      <span className="text-2xl font-bold text-cyan-600">{b.bundlePrice.toLocaleString()} DA</span>
                     </div>
                     <button onClick={() => handleAdd(b)} disabled={!inStock}
-                      className="flex items-center gap-2 bg-indigo-600 text-white px-5 py-3 rounded-xl font-bold hover:bg-indigo-700 disabled:opacity-50">
+                      className="flex items-center gap-2 bg-cyan-600 text-white px-5 py-3 rounded-md font-bold hover:bg-cyan-700 disabled:opacity-50">
                       <ShoppingCart size={18} /> {inStock ? 'Ajouter le lot' : 'Rupture'}
                     </button>
                   </div>

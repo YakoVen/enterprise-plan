@@ -14,7 +14,7 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
 
   return (
     <div>
-      <Suspense fallback={<div className="container mx-auto px-4 py-8"><div className="h-64 bg-gray-100 rounded-xl animate-pulse" /></div>}>
+      <Suspense fallback={<div className="container mx-auto px-4 py-8"><div className="h-64 bg-gray-100 rounded-md animate-pulse" /></div>}>
         <ArticlesListing initialArticles={filtered} />
       </Suspense>
     </div>

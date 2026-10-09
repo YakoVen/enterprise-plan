@@ -37,7 +37,7 @@ export default function FailedOrdersPage() {
   }
 
   if (loading) {
-    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-16 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-16 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   return (
@@ -47,7 +47,7 @@ export default function FailedOrdersPage() {
         <span className="text-sm text-gray-500">{orders.length} en attente de traitement</span>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+      <div className="bg-white rounded-md shadow-sm border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>

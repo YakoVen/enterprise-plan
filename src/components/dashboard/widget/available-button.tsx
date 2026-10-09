@@ -2,8 +2,8 @@ export default function AvailableButton({ isActive, onClick }: { isActive: boole
   return (
     <button
       onClick={onClick}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 ${
-        isActive ? 'bg-indigo-600' : 'bg-gray-200'
+      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-600 focus:ring-offset-2 ${
+        isActive ? 'bg-cyan-600' : 'bg-gray-200'
       }`}
     >
       <span className="sr-only">Activer</span>

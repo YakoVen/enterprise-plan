@@ -69,14 +69,14 @@ export default function OrderDetailPage() {
   }
 
   if (loading || authLoading) {
-    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-24 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-24 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   if (notFound || !order) {
     return (
-      <div className="bg-white rounded-xl border p-12 text-center">
+      <div className="bg-white rounded-md border p-12 text-center">
         <p className="text-gray-500 mb-4">Commande introuvable.</p>
-        <Link href="/account/orders" className="text-indigo-600 font-medium hover:underline">Retour aux commandes</Link>
+        <Link href="/account/orders" className="text-cyan-600 font-medium hover:underline">Retour aux commandes</Link>
       </div>
     );
   }
@@ -100,18 +100,18 @@ export default function OrderDetailPage() {
       </div>
 
       {/* Visual Status Pipeline */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="bg-white rounded-md shadow-sm border border-gray-100 p-6">
         <h2 className="text-lg font-bold text-gray-900 mb-6">Suivi de commande</h2>
         <div className="relative">
           <div className="absolute top-4 left-6 right-6 h-0.5 bg-gray-200" />
-          <div className="absolute top-4 left-6 h-0.5 bg-indigo-600 transition-all"
+          <div className="absolute top-4 left-6 h-0.5 bg-cyan-600 transition-all"
             style={{ width: `calc(${(order.state / (stateLabels.length - 1)) * 100}% - 3rem)` }} />
 
           <div className="relative flex justify-between">
             {timeline.map((step, idx) => (
               <div key={idx} className="flex flex-col items-center">
                 <div className={`h-8 w-8 rounded-full flex items-center justify-center relative z-10 ${
-                  step.completed ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-400'
+                  step.completed ? 'bg-cyan-600 text-white' : 'bg-gray-200 text-gray-400'
                 }`}>
                   {step.completed ? <CheckCircle2 className="h-5 w-5" /> : <Clock className="h-5 w-5" />}
                 </div>
@@ -124,7 +124,7 @@ export default function OrderDetailPage() {
       </div>
 
       {/* Return request */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="bg-white rounded-md shadow-sm border border-gray-100 p-6">
         <h2 className="text-lg font-bold text-gray-900 mb-4">Retour / Remboursement</h2>
         {existingReturn ? (
           <p className="text-sm text-gray-600">
@@ -136,19 +136,19 @@ export default function OrderDetailPage() {
           showReturnForm ? (
             <form onSubmit={handleReturnRequest} className="space-y-3">
               <textarea value={returnReason} onChange={(e) => setReturnReason(e.target.value)} rows={2}
-                placeholder="Motif du retour..." className="w-full border rounded-xl px-3 py-2 text-sm" required />
+                placeholder="Motif du retour..." className="w-full border rounded-md px-3 py-2 text-sm" required />
               <div className="flex gap-2">
                 <button type="submit" disabled={returning}
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-indigo-700 disabled:opacity-50">
+                  className="bg-cyan-600 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-cyan-700 disabled:opacity-50">
                   {returning ? 'Envoi...' : 'Envoyer la demande'}
                 </button>
                 <button type="button" onClick={() => setShowReturnForm(false)}
-                  className="px-4 py-2 border rounded-xl text-sm">Annuler</button>
+                  className="px-4 py-2 border rounded-md text-sm">Annuler</button>
               </div>
             </form>
           ) : (
             <button onClick={() => setShowReturnForm(true)}
-              className="flex items-center gap-2 text-sm font-medium text-indigo-600 hover:underline">
+              className="flex items-center gap-2 text-sm font-medium text-cyan-600 hover:underline">
               <RotateCcw size={16} /> Demander un retour
             </button>
           )
@@ -160,7 +160,7 @@ export default function OrderDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           {/* Items List */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden">
             <div className="p-6 border-b border-gray-100">
               <h2 className="text-lg font-bold text-gray-900">Articles ({order.items.length})</h2>
             </div>
@@ -190,7 +190,7 @@ export default function OrderDetailPage() {
 
         <div className="space-y-6">
           {/* Price Breakdown */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div className="bg-white rounded-md shadow-sm border border-gray-100 p-6">
             <h2 className="text-lg font-bold text-gray-900 mb-4">Résumé des coûts</h2>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between text-gray-600">
@@ -215,9 +215,9 @@ export default function OrderDetailPage() {
           </div>
 
           {/* Shipping Address */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div className="bg-white rounded-md shadow-sm border border-gray-100 p-6">
             <div className="flex items-center space-x-2 mb-4">
-              <MapPin className="h-5 w-5 text-indigo-600" />
+              <MapPin className="h-5 w-5 text-cyan-600" />
               <h2 className="text-lg font-bold text-gray-900">Adresse de livraison</h2>
             </div>
             <address className="not-italic text-sm text-gray-600 space-y-1">

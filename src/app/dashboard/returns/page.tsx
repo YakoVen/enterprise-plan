@@ -73,7 +73,7 @@ export default function ReturnsAdminPage() {
   const filtered = filter === 'all' ? requests : requests.filter((r) => r.status === filter);
 
   if (loading) {
-    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-20 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="h-20 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   return (
@@ -83,7 +83,7 @@ export default function ReturnsAdminPage() {
       <div className="flex gap-2 flex-wrap">
         {(['all', 'requested', 'approved', 'rejected', 'completed'] as const).map((s) => (
           <button key={s} onClick={() => setFilter(s)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium ${filter === s ? 'bg-indigo-600 text-white' : 'bg-white border hover:bg-gray-50'}`}>
+            className={`px-4 py-2 rounded-md text-sm font-medium ${filter === s ? 'bg-cyan-600 text-white' : 'bg-white border hover:bg-gray-50'}`}>
             {s === 'all' ? 'Tous' : statusLabels[s]}
           </button>
         ))}
@@ -91,7 +91,7 @@ export default function ReturnsAdminPage() {
 
       <div className="space-y-4">
         {filtered.map((r) => (
-          <div key={r.id} className="bg-white rounded-xl border p-5">
+          <div key={r.id} className="bg-white rounded-md border p-5">
             <div className="flex flex-wrap justify-between gap-3">
               <div>
                 <p className="font-bold">Commande #{r.orderId.substring(0, 8)} • {statusLabels[r.status]}</p>
@@ -102,18 +102,18 @@ export default function ReturnsAdminPage() {
                 {r.status === 'requested' && (
                   <>
                     <button onClick={() => decide(r.id, 'approved')} disabled={acting === r.id}
-                      className="flex items-center gap-1 px-3 py-2 bg-green-600 text-white rounded-xl text-sm font-medium hover:bg-green-700 disabled:opacity-50">
+                      className="flex items-center gap-1 px-3 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 disabled:opacity-50">
                       <CheckCircle size={16} /> Approuver
                     </button>
                     <button onClick={() => decide(r.id, 'rejected')} disabled={acting === r.id}
-                      className="flex items-center gap-1 px-3 py-2 bg-white border text-red-600 rounded-xl text-sm font-medium hover:bg-red-50 disabled:opacity-50">
+                      className="flex items-center gap-1 px-3 py-2 bg-white border text-red-600 rounded-md text-sm font-medium hover:bg-red-50 disabled:opacity-50">
                       <XCircle size={16} /> Refuser
                     </button>
                   </>
                 )}
                 {r.status === 'approved' && (
                   <button onClick={() => complete(r.id, r.orderId)} disabled={acting === r.id}
-                    className="flex items-center gap-1 px-3 py-2 bg-indigo-600 text-white rounded-xl text-sm font-medium hover:bg-indigo-700 disabled:opacity-50">
+                    className="flex items-center gap-1 px-3 py-2 bg-cyan-600 text-white rounded-md text-sm font-medium hover:bg-cyan-700 disabled:opacity-50">
                     <PackageCheck size={16} /> Terminer + restocker
                   </button>
                 )}
@@ -122,7 +122,7 @@ export default function ReturnsAdminPage() {
           </div>
         ))}
         {filtered.length === 0 && (
-          <div className="bg-white rounded-xl border p-12 text-center text-gray-500">Aucune demande dans cet onglet.</div>
+          <div className="bg-white rounded-md border p-12 text-center text-gray-500">Aucune demande dans cet onglet.</div>
         )}
       </div>
     </div>

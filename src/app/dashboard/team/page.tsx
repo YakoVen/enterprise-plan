@@ -49,7 +49,7 @@ export default function TeamPage() {
   const staffCount = users.filter((u) => isStaff(u.role)).length;
 
   if (loading) {
-    return <div className="space-y-4">{[...Array(4)].map((_, i) => <div key={i} className="h-16 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(4)].map((_, i) => <div key={i} className="h-16 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   return (
@@ -59,7 +59,7 @@ export default function TeamPage() {
         <span className="text-sm text-gray-500">{staffCount} membre(s) • {users.length} utilisateurs</span>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800">
+      <div className="bg-blue-50 border border-blue-200 rounded-md p-4 text-sm text-blue-800">
         Les membres doivent d&apos;abord créer un compte (connexion), puis un propriétaire leur attribue un rôle ici.
         Rôles : Support (commandes) • Agent (commandes + clients) • Manager (+ articles, marketing) • Propriétaire (tout).
       </div>
@@ -67,13 +67,13 @@ export default function TeamPage() {
       <div className="flex gap-2">
         {(['all', 'staff', 'customers'] as const).map((f) => (
           <button key={f} onClick={() => setFilter(f)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium ${filter === f ? 'bg-indigo-600 text-white' : 'bg-white border hover:bg-gray-50'}`}>
+            className={`px-4 py-2 rounded-md text-sm font-medium ${filter === f ? 'bg-cyan-600 text-white' : 'bg-white border hover:bg-gray-50'}`}>
             {f === 'all' ? 'Tous' : f === 'staff' ? 'Équipe' : 'Clients'}
           </button>
         ))}
       </div>
 
-      <div className="bg-white rounded-xl border overflow-hidden">
+      <div className="bg-white rounded-md border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -91,14 +91,14 @@ export default function TeamPage() {
                     <p className="text-xs text-gray-500">{u.email}</p>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${isStaff(u.role) ? 'bg-indigo-100 text-indigo-700' : 'bg-gray-100 text-gray-600'}`}>
+                    <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${isStaff(u.role) ? 'bg-cyan-100 text-cyan-700' : 'bg-gray-100 text-gray-600'}`}>
                       <ShieldCheck size={12} /> {ROLE_LABELS[u.role] || u.role}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <select value={isStaff(u.role) ? u.role : ''}
                       onChange={(e) => e.target.value && handleRole(u, e.target.value)}
-                      className="border rounded-xl px-3 py-1.5 text-sm bg-white">
+                      className="border rounded-md px-3 py-1.5 text-sm bg-white">
                       <option value="">— Client —</option>
                       {STAFF_ROLES.map((r: StaffRole) => (
                         <option key={r} value={r}>{ROLE_LABELS[r]}</option>
@@ -115,7 +115,7 @@ export default function TeamPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border overflow-hidden">
+      <div className="bg-white rounded-md border overflow-hidden">
         <h2 className="font-bold p-6 pb-2 flex items-center gap-2"><History size={18} /> Activité récente</h2>
         <div className="divide-y">
           {activity.map((a) => (

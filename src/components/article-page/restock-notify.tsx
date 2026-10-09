@@ -33,13 +33,13 @@ export default function RestockNotify({ articleId }: { articleId: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-orange-50 border border-orange-200 rounded-xl p-4 space-y-2">
+    <form onSubmit={handleSubmit} className="bg-orange-50 border border-orange-200 rounded-md p-4 space-y-2">
       <p className="text-sm font-medium flex items-center gap-2"><Bell size={16} /> Prévenez-moi quand c&apos;est de retour</p>
       <div className="flex gap-2">
         <input value={contact} onChange={(e) => setContact(e.target.value)}
-          placeholder="Téléphone ou email" className="flex-1 border rounded-xl px-3 py-2 text-sm" />
+          placeholder="Téléphone ou email" className="flex-1 border rounded-md px-3 py-2 text-sm" />
         <button type="submit" disabled={sending}
-          className="bg-orange-500 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-orange-600 disabled:opacity-50">
+          className="bg-orange-500 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-orange-600 disabled:opacity-50">
           {sending ? '...' : 'OK'}
         </button>
       </div>

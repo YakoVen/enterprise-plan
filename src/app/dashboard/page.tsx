@@ -61,8 +61,8 @@ export default function DashboardOverview() {
   const recent = [...sales].sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 5);
 
   const statCards = [
-    { name: 'Revenus (DZD)', value: revenue.toLocaleString(), icon: DollarSign, color: 'text-green-600', bg: 'bg-green-100' },
-    { name: 'Commandes totales', value: sales.length, icon: ShoppingCart, color: 'text-indigo-600', bg: 'bg-indigo-100' },
+    { name: 'Revenus (DZD)', value: Math.round(revenue).toLocaleString(), icon: DollarSign, color: 'text-green-600', bg: 'bg-green-100' },
+    { name: 'Commandes totales', value: sales.length, icon: ShoppingCart, color: 'text-cyan-600', bg: 'bg-cyan-100' },
     { name: 'En attente', value: statuses.pending, icon: Clock, color: 'text-orange-600', bg: 'bg-orange-100' },
     { name: 'Articles actifs', value: activeItems, icon: Package, color: 'text-blue-600', bg: 'bg-blue-100' },
     { name: 'Paniers abandonnés', value: abandonedCount, icon: AlertTriangle, color: 'text-yellow-600', bg: 'bg-yellow-100' },
@@ -70,14 +70,14 @@ export default function DashboardOverview() {
   ];
 
   if (loading) {
-    return <div className="space-y-4">{[...Array(4)].map((_, i) => <div key={i} className="h-24 bg-gray-100 rounded-xl animate-pulse" />)}</div>;
+    return <div className="space-y-4">{[...Array(4)].map((_, i) => <div key={i} className="h-24 bg-gray-100 rounded-md animate-pulse" />)}</div>;
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Tableau de bord</h1>
-        <Link href="/dashboard/analytics" className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-indigo-700">
+        <Link href="/dashboard/analytics" className="flex items-center gap-2 bg-cyan-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-cyan-700">
           <TrendingUp size={16} /> Analytique
         </Link>
       </div>
@@ -85,7 +85,7 @@ export default function DashboardOverview() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {statCards.map((stat, idx) => (
-          <div key={idx} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4">
+          <div key={idx} className="bg-white rounded-md shadow-sm border border-gray-100 p-6 flex items-center gap-4">
             <div className={`p-3 rounded-lg ${stat.bg}`}>
               <stat.icon className={`w-6 h-6 ${stat.color}`} />
             </div>
@@ -99,10 +99,10 @@ export default function DashboardOverview() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Orders */}
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="lg:col-span-2 bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden">
           <div className="p-6 border-b border-gray-100 flex items-center justify-between">
             <h2 className="text-lg font-bold text-gray-900">Commandes récentes</h2>
-            <Link href="/dashboard/orders" className="text-sm text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1">
+            <Link href="/dashboard/orders" className="text-sm text-cyan-600 hover:text-cyan-800 font-medium flex items-center gap-1">
               Voir tout <ArrowRight size={16} />
             </Link>
           </div>
@@ -128,7 +128,7 @@ export default function DashboardOverview() {
                         {stateLabels[order.state] ?? order.state}
                       </span>
                     </td>
-                    <td className="p-4 font-medium text-gray-900">{order.total.toLocaleString()} DA</td>
+                    <td className="p-4 font-medium text-gray-900">{Math.round(order.total).toLocaleString()} DA</td>
                   </tr>
                 ))}
                 {recent.length === 0 && (
@@ -140,15 +140,15 @@ export default function DashboardOverview() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white rounded-md shadow-sm border border-gray-100 p-6">
           <h2 className="text-lg font-bold text-gray-900 mb-4">Actions rapides</h2>
           <div className="space-y-3">
             <Link href="/dashboard/articles/add" className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors">
-              <div className="p-2 bg-indigo-50 rounded text-indigo-600"><Package size={20} /></div>
+              <div className="p-2 bg-cyan-50 rounded text-cyan-600"><Package size={20} /></div>
               <div className="font-medium text-gray-700">Ajouter un article</div>
             </Link>
             <Link href="/dashboard/discounts" className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors">
-              <div className="p-2 bg-indigo-50 rounded text-indigo-600"><Tag size={20} /></div>
+              <div className="p-2 bg-cyan-50 rounded text-cyan-600"><Tag size={20} /></div>
               <div className="font-medium text-gray-700">Créer une remise</div>
             </Link>
             <Link href="/dashboard/abandoned-carts" className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors">

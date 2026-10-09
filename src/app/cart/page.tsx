@@ -19,7 +19,7 @@ export default function CartPage() {
         <p className="text-gray-500 max-w-md mx-auto">
           Découvrez nos produits et trouvez ce qui vous correspond le mieux.
         </p>
-        <Link href="/articles" className="inline-block bg-indigo-600 text-white px-8 py-3 rounded-xl font-medium hover:bg-indigo-700 transition">
+        <Link href="/articles" className="inline-block bg-cyan-600 text-white px-8 py-3 rounded-md font-medium hover:bg-cyan-700 transition">
           Retour à la boutique
         </Link>
       </div>
@@ -33,8 +33,8 @@ export default function CartPage() {
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="lg:w-2/3 space-y-4">
           {items.map((item) => (
-            <div key={`${item.articleId}-${item.variantId || 'base'}`} className="flex gap-4 p-4 bg-white border border-gray-100 rounded-2xl shadow-sm">
-              <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+            <div key={`${item.articleId}-${item.variantId || 'base'}`} className="flex gap-4 p-4 bg-white border border-gray-100 rounded-lg shadow-sm">
+              <div className="w-24 h-24 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
                 {item.thumbnail ? (
                   <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
                 ) : (
@@ -52,8 +52,8 @@ export default function CartPage() {
                   </button>
                 </div>
                 <div className="flex justify-between items-end">
-                  <span className="font-bold text-indigo-600">{fmt(item.price * item.quantity)}</span>
-                  <div className="flex items-center bg-gray-100 rounded-xl">
+                  <span className="font-bold text-cyan-600">{fmt(item.price * item.quantity)}</span>
+                  <div className="flex items-center bg-gray-100 rounded-md">
                     <button onClick={() => updateQuantity(item.articleId, item.quantity - 1, item.variantId)} className="p-2 hover:bg-gray-200 rounded-l-xl">
                       <Minus className="w-4 h-4" />
                     </button>
@@ -69,7 +69,7 @@ export default function CartPage() {
         </div>
 
         <div className="lg:w-1/3">
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-6 sticky top-8">
+          <div className="bg-white p-6 rounded-lg border border-gray-100 shadow-sm space-y-6 sticky top-8">
             <h2 className="text-xl font-bold text-gray-900">Résumé</h2>
             <div className="space-y-4 text-sm">
               <div className="flex justify-between text-gray-600">
@@ -85,7 +85,7 @@ export default function CartPage() {
                 <span>{fmt(subtotal)}</span>
               </div>
             </div>
-            <Link href="/checkout" className="w-full bg-indigo-600 text-white py-3 rounded-xl font-medium flex justify-center hover:bg-indigo-700 transition">
+            <Link href="/checkout" className="w-full bg-cyan-600 text-white py-3 rounded-md font-medium flex justify-center hover:bg-cyan-700 transition">
               Passer la commande
             </Link>
           </div>

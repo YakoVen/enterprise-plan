@@ -121,7 +121,7 @@ export default function ShipmentPanel({ order, onUpdated }: ShipmentPanelProps) 
   const courierLabel = order.courierStatus ? getStatusLabel(order.courierStatus).fr : null;
 
   return (
-    <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+    <div className="bg-white p-5 rounded-md border border-gray-100 shadow-sm">
       <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
         <Truck size={16} /> Expédition
       </h3>
@@ -160,7 +160,7 @@ export default function ShipmentPanel({ order, onUpdated }: ShipmentPanelProps) 
                 value={courier}
                 onChange={(e) => setCourier(e.target.value)}
                 disabled={!confirmed || busy !== null}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-600 disabled:bg-gray-50"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50"
               >
                 <option value="">Choisir...</option>
                 {couriers.map((c) => (
@@ -178,7 +178,7 @@ export default function ShipmentPanel({ order, onUpdated }: ShipmentPanelProps) 
               onClick={handleShip}
               disabled={!confirmed || !courier || busy !== null}
               title={!confirmed ? 'Confirmez la commande d’abord' : undefined}
-              className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 bg-cyan-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-cyan-700 transition disabled:opacity-50"
             >
               {busy === 'ship' ? <Loader2 size={16} className="animate-spin" /> : <PackageCheck size={16} />}
               Créer le colis
@@ -210,7 +210,7 @@ export default function ShipmentPanel({ order, onUpdated }: ShipmentPanelProps) 
                 href={order.labelUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1 text-indigo-600 hover:underline text-sm"
+                className="flex items-center gap-1 text-cyan-600 hover:underline text-sm"
               >
                 <ExternalLink size={14} /> Imprimer l’étiquette
               </a>

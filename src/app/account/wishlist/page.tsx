@@ -51,7 +51,7 @@ export default function WishlistPage() {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="h-64 bg-gray-100 rounded-xl animate-pulse" />
+          <div key={i} className="h-64 bg-gray-100 rounded-md animate-pulse" />
         ))}
       </div>
     );
@@ -59,7 +59,7 @@ export default function WishlistPage() {
 
   if (articles.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 flex flex-col items-center text-center">
+      <div className="bg-white rounded-md shadow-sm border border-gray-100 p-12 flex flex-col items-center text-center">
         <div className="h-24 w-24 bg-red-50 rounded-full flex items-center justify-center mb-6">
           <HeartCrack className="h-12 w-12 text-red-400" />
         </div>
@@ -69,7 +69,7 @@ export default function WishlistPage() {
         </p>
         <Link
           href="/articles"
-          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-cyan-600 hover:bg-cyan-700 transition-colors"
         >
           Découvrir la boutique
         </Link>
@@ -90,7 +90,7 @@ export default function WishlistPage() {
         {articles.map((item) => {
           const inStock = (item.totalStock ?? 1) > 0;
           return (
-            <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group">
+            <div key={item.id} className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden group">
               <div className="bg-gray-200 h-48 relative">
                 {item.thumbnail ? (
                   <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
@@ -122,7 +122,7 @@ export default function WishlistPage() {
                 <button
                   disabled={!inStock}
                   onClick={() => handleAddToCart(item)}
-                  className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   Ajouter au panier

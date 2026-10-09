@@ -52,7 +52,7 @@ interface TrackingData {
 
 export default function TrackPage() {
   return (
-    <Suspense fallback={<div className="container mx-auto px-4 py-12 max-w-3xl"><div className="h-32 bg-gray-100 rounded-2xl animate-pulse" /></div>}>
+    <Suspense fallback={<div className="container mx-auto px-4 py-12 max-w-3xl"><div className="h-32 bg-gray-100 rounded-lg animate-pulse" /></div>}>
       <TrackContent />
     </Suspense>
   );
@@ -177,13 +177,13 @@ function TrackContent() {
               placeholder="Ex: ORDER123"
               value={orderId}
               onChange={(e) => setOrderId(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none"
+              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-600 outline-none"
             />
           </div>
           <button
             onClick={handleTrack}
             disabled={loading}
-            className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition disabled:opacity-50"
+            className="px-6 py-3 bg-cyan-600 text-white font-medium rounded-md hover:bg-cyan-700 transition disabled:opacity-50"
           >
             {loading ? 'Recherche...' : 'Suivre'}
           </button>
@@ -191,7 +191,7 @@ function TrackContent() {
       </div>
 
       {error && (
-        <div className="bg-red-50 text-red-600 p-4 rounded-xl text-center">
+        <div className="bg-red-50 text-red-600 p-4 rounded-md text-center">
           Commande introuvable. Veuillez vérifier le numéro.
         </div>
       )}
@@ -201,7 +201,7 @@ function TrackContent() {
           {/* Courier status banner */}
           {trackingData.trackingNumber && trackingData.courierLabel && (
             <div
-              className={`p-4 rounded-xl flex items-center justify-between gap-3 ${
+              className={`p-4 rounded-md flex items-center justify-between gap-3 ${
                 trackingData.courierTone === 'success'
                   ? 'bg-green-50 text-green-800'
                   : trackingData.courierTone === 'warning'
@@ -231,7 +231,7 @@ function TrackContent() {
           )}
 
           {showAttemptedAlert && (
-            <div className="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl flex items-start gap-2">
+            <div className="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-md flex items-start gap-2">
               <AlertTriangle size={18} className="mt-0.5 shrink-0" />
               <p className="text-sm">
                 Le transporteur a tenté la livraison sans succès. Contactez la boutique
@@ -241,7 +241,7 @@ function TrackContent() {
           )}
 
           {showNegativeAlert && (
-            <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl flex items-start gap-2">
+            <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-md flex items-start gap-2">
               <AlertTriangle size={18} className="mt-0.5 shrink-0" />
               <p className="text-sm">
                 Statut : {trackingData.courierLabel}. Contactez la boutique pour la suite.
@@ -253,7 +253,7 @@ function TrackContent() {
             <p className="text-xs text-gray-500 text-center">{trackingData.liveError} Affichage du dernier statut connu.</p>
           )}
 
-          <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div className="bg-white p-8 rounded-lg border border-gray-100 shadow-sm">
             <div className="flex justify-between items-center mb-8">
               <div>
                 <h2 className="text-xl font-bold text-gray-900">Commande #{trackingData.id}</h2>
@@ -265,7 +265,7 @@ function TrackContent() {
             <div className="relative">
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-gray-100 rounded-full"></div>
               <div
-                className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-indigo-600 rounded-full transition-all duration-500"
+                className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-cyan-600 rounded-full transition-all duration-500"
                 style={{ width: `${(getStepIndex(trackingData.status) / (steps.length - 1)) * 100}%` }}
               ></div>
 
@@ -278,8 +278,8 @@ function TrackContent() {
                   return (
                     <div key={step.id} className="flex flex-col items-center">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center relative z-10 transition-colors ${
-                        isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' :
-                        isPast ? 'bg-indigo-600 text-white' :
+                        isActive ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-200' :
+                        isPast ? 'bg-cyan-600 text-white' :
                         'bg-gray-100 text-gray-400'
                       }`}>
                         <Icon className="w-5 h-5" />
@@ -302,13 +302,13 @@ function TrackContent() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+            <div className="bg-white p-6 rounded-lg border border-gray-100 shadow-sm space-y-4">
               <h3 className="font-bold text-gray-900">Historique</h3>
               <div className="space-y-4">
                 {/* Live courier events first when available, then the order log. */}
                 {(trackingData.liveEvents ?? []).map((e, i: number) => (
                   <div key={`live-${i}`} className="flex gap-4">
-                    <div className="w-2 h-2 mt-2 rounded-full bg-indigo-600 flex-shrink-0"></div>
+                    <div className="w-2 h-2 mt-2 rounded-full bg-cyan-600 flex-shrink-0"></div>
                     <div>
                       <p className="text-sm font-medium text-gray-900">{e.label}</p>
                       <p className="text-xs text-gray-500">{e.timestamp}</p>
@@ -327,7 +327,7 @@ function TrackContent() {
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+            <div className="bg-white p-6 rounded-lg border border-gray-100 shadow-sm space-y-4">
               <h3 className="font-bold text-gray-900">Détails de livraison</h3>
               <div className="space-y-2 text-sm text-gray-600">
                 <p><span className="font-medium text-gray-900">Wilaya:</span> {trackingData.wilaya}</p>

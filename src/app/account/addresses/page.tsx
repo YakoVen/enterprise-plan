@@ -34,7 +34,7 @@ export default function AddressesPage() {
         <h1 className="text-2xl font-bold text-gray-900">Mes Adresses</h1>
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+          className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-cyan-600 hover:bg-cyan-700 transition-colors"
         >
           <Plus className="mr-2 h-4 w-4" />
           Ajouter une adresse
@@ -43,14 +43,14 @@ export default function AddressesPage() {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {addresses.map((address) => (
-          <div key={address.id} className={`bg-white rounded-xl shadow-sm border p-6 relative ${address.isDefault ? 'border-indigo-500 ring-1 ring-indigo-500' : 'border-gray-200'}`}>
+          <div key={address.id} className={`bg-white rounded-md shadow-sm border p-6 relative ${address.isDefault ? 'border-cyan-500 ring-1 ring-cyan-500' : 'border-gray-200'}`}>
             {address.isDefault && (
-              <span className="absolute top-0 right-0 -mt-3 mr-4 px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-full border border-indigo-200">
+              <span className="absolute top-0 right-0 -mt-3 mr-4 px-3 py-1 bg-cyan-100 text-cyan-800 text-xs font-bold rounded-full border border-cyan-200">
                 Par défaut
               </span>
             )}
             <div className="flex items-center space-x-2 mb-4">
-              <MapPin className={`h-5 w-5 ${address.isDefault ? 'text-indigo-600' : 'text-gray-400'}`} />
+              <MapPin className={`h-5 w-5 ${address.isDefault ? 'text-cyan-600' : 'text-gray-400'}`} />
               <h3 className="text-lg font-bold text-gray-900">{address.label}</h3>
             </div>
             
@@ -62,7 +62,7 @@ export default function AddressesPage() {
             </div>
             
             <div className="flex items-center space-x-3 pt-4 border-t border-gray-100">
-              <button className="text-sm font-medium text-indigo-600 hover:text-indigo-800 flex items-center">
+              <button className="text-sm font-medium text-cyan-600 hover:text-cyan-800 flex items-center">
                 <Edit2 className="mr-1 h-4 w-4" /> Modifier
               </button>
               <span className="text-gray-300">|</span>
@@ -82,7 +82,7 @@ export default function AddressesPage() {
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
 
-            <div className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div className="inline-block align-bottom bg-white rounded-md text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="flex justify-between items-center mb-5">
                   <h3 className="text-lg leading-6 font-bold text-gray-900">Nouvelle adresse</h3>
@@ -95,28 +95,28 @@ export default function AddressesPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="col-span-2 sm:col-span-1">
                       <label className="block text-sm font-medium text-gray-700">Libellé (ex: Maison)</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border p-2 outline-none" />
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border p-2 outline-none" />
                     </div>
                     <div className="col-span-2 sm:col-span-1">
                       <label className="block text-sm font-medium text-gray-700">Nom complet</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border p-2 outline-none" />
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border p-2 outline-none" />
                     </div>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Téléphone</label>
-                    <input type="tel" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border p-2 outline-none" />
+                    <input type="tel" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border p-2 outline-none" />
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Adresse complète</label>
-                    <textarea rows={3} className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border p-2 outline-none"></textarea>
+                    <textarea rows={3} className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border p-2 outline-none"></textarea>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700">Wilaya</label>
-                      <select className="mt-1 block w-full bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 outline-none">
+                      <select className="mt-1 block w-full bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm p-2 outline-none">
                         <option>16 - Alger</option>
                         <option>09 - Blida</option>
                         <option>31 - Oran</option>
@@ -124,12 +124,12 @@ export default function AddressesPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700">Commune</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border p-2 outline-none" />
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm border p-2 outline-none" />
                     </div>
                   </div>
                   
                   <div className="flex items-center mt-4">
-                    <input id="default-address" type="checkbox" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+                    <input id="default-address" type="checkbox" className="h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-gray-300 rounded" />
                     <label htmlFor="default-address" className="ml-2 block text-sm text-gray-900">
                       Définir comme adresse par défaut
                     </label>
@@ -137,10 +137,10 @@ export default function AddressesPage() {
                 </form>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button type="button" className="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-colors">
+                <button type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-cyan-600 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-colors">
                   Enregistrer
                 </button>
-                <button type="button" onClick={() => setIsModalOpen(false)} className="mt-3 w-full inline-flex justify-center rounded-xl border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors">
                   Annuler
                 </button>
               </div>

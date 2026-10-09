@@ -53,7 +53,7 @@ export default function ItemCard({ article }: ItemCardProps) {
 
   return (
     <Link href={`/articles/${article.id}`} className="group block h-full">
-      <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 h-full flex flex-col overflow-hidden relative">
+      <div className="bg-white rounded-md shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 h-full flex flex-col overflow-hidden relative">
         
         {/* Badges */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
@@ -97,11 +97,11 @@ export default function ItemCard({ article }: ItemCardProps) {
         {/* Content */}
         <div className="p-4 flex flex-col flex-grow">
           {article.hasVariants && (
-            <span className="text-xs font-medium text-indigo-600 mb-1 inline-block">
+            <span className="text-xs font-medium text-cyan-600 mb-1 inline-block">
               Plusieurs options
             </span>
           )}
-          <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-indigo-600 transition-colors">
+          <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-cyan-600 transition-colors">
             {article.title}
           </h3>
           
@@ -120,10 +120,10 @@ export default function ItemCard({ article }: ItemCardProps) {
             <button 
               onClick={handleAddToCart}
               disabled={stock === 0}
-              className={`p-2.5 rounded-xl shadow-sm transition-all ${
+              className={`p-2.5 rounded-md shadow-sm transition-all ${
                 stock === 0 
                   ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white'
+                  : 'bg-cyan-50 text-cyan-600 hover:bg-cyan-600 hover:text-white'
               }`}
             >
               <ShoppingBag size={20} />

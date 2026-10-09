@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Heart, Minus, Plus, Share2, ShoppingCart, MessageCircle } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
@@ -32,7 +33,14 @@ interface ArticleShape {
   discount?: number;
 }
 
-export default function Presentation({ article, relatedArticles }: { article: ArticleShape, relatedArticles: { id: string; title: string }[] }) {
+interface RelatedProduct {
+  id: string;
+  title: string;
+  thumbnail?: string;
+  price: number;
+}
+
+export default function Presentation({ article, relatedArticles }: { article: ArticleShape, relatedArticles: RelatedProduct[] }) {
   const { addItem } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { fmt } = useCurrency();
@@ -89,8 +97,8 @@ export default function Presentation({ article, relatedArticles }: { article: Ar
       <div className="flex flex-col lg:flex-row gap-12">
         {/* Images */}
         <div className="lg:w-1/2 space-y-4">
-          <div className="aspect-square bg-gray-100 rounded-2xl overflow-hidden relative">
-            {(sale || article.discount) && (
+          <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden relative">
+            {(sale ? sale.discountPct > 0 : (article.discount || 0) > 0) && (
               <span className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full font-bold">
                 -{sale ? sale.discountPct : article.discount}%
               </span>
@@ -99,7 +107,7 @@ export default function Presentation({ article, relatedArticles }: { article: Ar
           </div>
           <div className="flex gap-4 overflow-x-auto pb-2">
             {article.images?.map((img: string, i: number) => (
-              <button key={i} onClick={() => setSelectedImage(img)} className={`w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 ${selectedImage === img ? 'border-indigo-600' : 'border-transparent'}`}>
+              <button key={i} onClick={() => setSelectedImage(img)} className={`w-20 h-20 rounded-md overflow-hidden flex-shrink-0 border-2 ${selectedImage === img ? 'border-cyan-600' : 'border-transparent'}`}>
                 <img src={img} alt="" className="w-full h-full object-cover" />
               </button>
             ))}
@@ -117,7 +125,7 @@ export default function Presentation({ article, relatedArticles }: { article: Ar
               </div>
             )}
             <div className="flex items-center gap-4">
-              <span className="text-2xl font-bold text-indigo-600">{fmt(salePrice)}</span>
+              <span className="text-2xl font-bold text-cyan-600">{fmt(salePrice)}</span>
               {(sale || article.oldPrice) && (
                 <span className="text-lg text-gray-400 line-through">{fmt(sale ? article.price : article.oldPrice!)}</span>
               )}
@@ -135,7 +143,7 @@ export default function Presentation({ article, relatedArticles }: { article: Ar
               <h3 className="font-medium text-gray-900">Variantes</h3>
               <div className="flex gap-2">
                 {article.variants.map((v: VariantShape) => (
-                  <button key={v.id} onClick={() => setSelectedVariant(v.id)} className={`px-4 py-2 rounded-xl border-2 ${selectedVariant === v.id ? 'border-indigo-600 text-indigo-600 bg-indigo-50' : 'border-gray-200 text-gray-700 hover:border-gray-300'}`}>
+                  <button key={v.id} onClick={() => setSelectedVariant(v.id)} className={`px-4 py-2 rounded-md border-2 ${selectedVariant === v.id ? 'border-cyan-600 text-cyan-600 bg-cyan-50' : 'border-gray-200 text-gray-700 hover:border-gray-300'}`}>
                     {v.name}
                   </button>
                 ))}
@@ -144,7 +152,7 @@ export default function Presentation({ article, relatedArticles }: { article: Ar
           )}
 
           <div className="flex items-center gap-6">
-            <div className="flex items-center bg-gray-100 rounded-xl">
+            <div className="flex items-center bg-gray-100 rounded-md">
               <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-3 hover:bg-gray-200 rounded-l-xl transition">
                 <Minus className="w-5 h-5 text-gray-600" />
               </button>
@@ -157,11 +165,11 @@ export default function Presentation({ article, relatedArticles }: { article: Ar
 
           <div className="flex flex-col sm:flex-row gap-4">
             <button onClick={handleAddToCart} disabled={isOOS}
-              className="flex-1 bg-indigo-600 text-white py-4 px-6 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-indigo-700 transition disabled:opacity-50">
+              className="flex-1 bg-cyan-600 text-white py-4 px-6 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-cyan-700 transition disabled:opacity-50">
               <ShoppingCart className="w-5 h-5" />
               {isOOS ? 'Rupture de stock' : 'Ajouter au panier'}
             </button>
-            <button className="flex-1 bg-green-500 text-white py-4 px-6 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-green-600 transition" onClick={handleWhatsApp}>
+            <button className="flex-1 bg-green-500 text-white py-4 px-6 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-green-600 transition" onClick={handleWhatsApp}>
               <MessageCircle className="w-5 h-5" />
               Commander sur WhatsApp
             </button>
@@ -171,11 +179,11 @@ export default function Presentation({ article, relatedArticles }: { article: Ar
 
           <div className="flex gap-4">
             <button onClick={handleWishlist}
-              className="flex-1 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 font-medium text-gray-700 hover:bg-gray-50 transition">
+              className="flex-1 py-3 border border-gray-200 rounded-md flex items-center justify-center gap-2 font-medium text-gray-700 hover:bg-gray-50 transition">
               <Heart className={`w-5 h-5 ${liked ? 'fill-red-500 text-red-500' : ''}`} />
               {liked ? 'Dans les favoris' : 'Ajouter aux favoris'}
             </button>
-            <button onClick={copyLink} className="flex-1 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 font-medium text-gray-700 hover:bg-gray-50 transition">
+            <button onClick={copyLink} className="flex-1 py-3 border border-gray-200 rounded-md flex items-center justify-center gap-2 font-medium text-gray-700 hover:bg-gray-50 transition">
               <Share2 className="w-5 h-5" />
               Partager
             </button>
@@ -192,16 +200,28 @@ export default function Presentation({ article, relatedArticles }: { article: Ar
       <ReviewsSection articleId={article.id} />
 
       {/* Related Products */}
-      <div className="space-y-8">
-        <h2 className="text-2xl font-bold text-gray-900">Vous aimerez aussi</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {relatedArticles.map((prod) => (
-            <div key={prod.id} className="border border-gray-200 rounded-xl p-4">
-              {prod.title}
-            </div>
-          ))}
+      {relatedArticles.length > 0 && (
+        <div className="space-y-8">
+          <h2 className="text-2xl font-bold text-gray-900">Vous aimerez aussi</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {relatedArticles.map((prod) => (
+              <Link key={prod.id} href={`/articles/${prod.id}`} className="group border border-gray-200 rounded-md overflow-hidden hover:shadow-md transition-shadow">
+                <div className="aspect-square bg-gray-50 overflow-hidden">
+                  {prod.thumbnail ? (
+                    <img src={prod.thumbnail} alt={prod.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-300 text-sm">Image</div>
+                  )}
+                </div>
+                <div className="p-3">
+                  <p className="text-sm font-medium text-gray-900 truncate group-hover:text-cyan-600">{prod.title}</p>
+                  <p className="font-bold text-cyan-700">{fmt(prod.price)}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

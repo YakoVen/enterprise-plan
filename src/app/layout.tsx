@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '../contexts/CartContext';
 import { AuthProvider } from '../contexts/AuthContext';
@@ -8,7 +8,7 @@ import { CurrencyProvider } from '../contexts/CurrencyContext';
 import { Toaster } from 'react-hot-toast';
 import { store_name, store_description } from '@/service/constants';
 
-const inter = Inter({ subsets: ['latin'] });
+const grotesk = Space_Grotesk({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={inter.className}>
+      <body className={grotesk.className}>
         <AuthProvider>
           <CartProvider>
             <WishlistProvider>

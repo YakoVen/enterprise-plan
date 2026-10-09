@@ -122,13 +122,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   };
 
   if (isChecking) {
-    return <div className="min-h-screen flex items-center justify-center bg-gray-50"><div className="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div></div>;
+    return <div className="min-h-screen flex items-center justify-center bg-gray-50"><div className="w-8 h-8 border-4 border-cyan-600 border-t-transparent rounded-full animate-spin"></div></div>;
   }
 
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-        <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+        <div className="w-full max-w-md bg-white rounded-md shadow-lg p-8">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-gray-900">Administration</h1>
             <p className="text-gray-500 mt-2">Connectez-vous pour accéder au tableau de bord</p>
@@ -139,7 +139,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <input 
                 type="email" 
                 required 
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -149,7 +149,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <input 
                 type="password" 
                 required 
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -157,7 +157,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {loginError && <p className="text-red-500 text-sm">{loginError}</p>}
             <button 
               type="submit"
-              className="w-full bg-indigo-600 text-white font-medium py-2.5 rounded-lg hover:bg-indigo-700 transition-colors"
+              className="w-full bg-cyan-500 text-slate-950 font-medium py-2.5 rounded-lg hover:bg-cyan-700 transition-colors"
             >
               Se connecter
             </button>
@@ -183,12 +183,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Sidebar */}
       <aside className={`
         ${isMobileMenuOpen ? 'block' : 'hidden'} 
-        md:flex flex-col w-full md:w-64 bg-gray-900 text-gray-300
+        md:flex flex-col w-full md:w-64 bg-slate-950 text-slate-300
         min-h-screen shrink-0
       `}>
         <div className="p-6 hidden md:block">
           <h1 className="text-2xl font-bold text-white">E-Commerce</h1>
-          <p className="text-xs text-indigo-400 mt-1">Intermediate Plan</p>
+          <p className="text-xs text-indigo-400 mt-1">Enterprise Plan</p>
         </div>
         
         <nav className="flex-1 px-4 py-4 space-y-1">
@@ -201,8 +201,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 className={`
                   flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
                   ${isActive 
-                    ? 'bg-indigo-600 text-white' 
-                    : 'hover:bg-gray-800 hover:text-white'}
+                    ? 'bg-cyan-500 text-slate-950' 
+                    : 'hover:bg-slate-800 hover:text-white'}
                 `}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -213,10 +213,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           })}
         </nav>
 
-        <div className="p-4 mt-auto border-t border-gray-800">
+        <div className="p-4 mt-auto border-t border-slate-800">
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+            className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-lg text-gray-400 hover:bg-slate-800 hover:text-white transition-colors"
           >
             <LogOut size={20} />
             <span className="font-medium">Déconnexion</span>
@@ -228,7 +228,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <main className="flex-1 p-6 lg:p-8 min-w-0 bg-gray-50 h-screen overflow-y-auto">
         <div className="max-w-7xl mx-auto">
           {allowed ? children : (
-            <div className="bg-white rounded-xl border p-12 text-center">
+            <div className="bg-white rounded-md border p-12 text-center">
               <p className="font-bold text-lg mb-2">Accès restreint</p>
               <p className="text-gray-500 text-sm">Votre rôle ne permet pas d&apos;accéder à cette section.</p>
             </div>
