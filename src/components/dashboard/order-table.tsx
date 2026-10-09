@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Search, Filter, Eye, Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Filter, Eye, Download, ChevronLeft, ChevronRight, Truck } from 'lucide-react';
 import CommandAmplify from './command-amplify';
 import { Order } from '@/interfaces/order';
 import { getOrders } from '@/service/firebase/database';
+import { getStatusLabel } from '@/service/shipping/status-map';
 import toast from 'react-hot-toast';
 
 const stateLabels = ['En attente', 'Confirmée', 'Expédiée', 'Livrée'];
@@ -42,7 +43,8 @@ export default function OrderTable() {
       const matchesSearch = !q ||
         order.id.toLowerCase().includes(q) ||
         order.name.toLowerCase().includes(q) ||
-        order.phone.replace(/\s/g, '').includes(q.replace(/\s/g, ''));
+        order.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
+        (order.trackingNumber ?? '').toLowerCase().includes(q);
       const matchesStatus = statusFilter === 'all' || order.state === Number(statusFilter);
       return matchesSearch && matchesStatus;
     });
@@ -58,9 +60,10 @@ export default function OrderTable() {
   }
 
   const exportCSV = () => {
-    const headers = ['ID', 'Client', 'Téléphone', 'Wilaya', 'Date', 'Statut', 'Total'];
+    const headers = ['ID', 'Client', 'Téléphone', 'Wilaya', 'Date', 'Statut', 'Suivi', 'Transporteur', 'Total'];
     const rows = filteredOrders.map((o) => [
-      o.id, `"${o.name}"`, o.phone, o.wilaya, o.date, stateLabels[o.state] ?? o.state, o.total,
+      o.id, `"${o.name}"`, o.phone, o.wilaya, o.date, stateLabels[o.state] ?? o.state,
+      o.trackingNumber ?? '', o.courier ?? '', o.total,
     ]);
     const csvContent = [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
 
@@ -134,7 +137,15 @@ export default function OrderTable() {
             {pageOrders.length > 0 ? (
               pageOrders.map((order) => (
                 <tr key={order.id} className="text-sm hover:bg-gray-50">
-                  <td className="p-4 font-medium text-gray-900">#{order.id.substring(0, 8)}</td>
+                  <td className="p-4 font-medium text-gray-900">
+                    #{order.id.substring(0, 8)}
+                    {order.trackingNumber && (
+                      <div className="flex items-center gap-1 text-xs text-gray-500 font-mono mt-0.5" title={order.courierStatus ? getStatusLabel(order.courierStatus).fr : undefined}>
+                        <Truck size={12} className="shrink-0" />
+                        {order.trackingNumber}
+                      </div>
+                    )}
+                  </td>
                   <td className="p-4">
                     <div className="text-gray-900 font-medium">{order.name}</div>
                     <div className="text-gray-500 text-xs">{order.phone}</div>

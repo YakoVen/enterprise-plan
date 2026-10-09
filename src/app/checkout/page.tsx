@@ -1,17 +1,26 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, Truck, Building2, Tag } from 'lucide-react';
+import { Check, Truck, Building2, Tag, Loader2, Info } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
-import { wilayas } from '@/service/constants';
 import { getDeliveryZones, getLoyaltyConfig, getUserProfile } from '@/service/firebase/database';
 import { LoyaltyConfig, DEFAULT_LOYALTY } from '@/interfaces/loyalty';
 import { DeliveryZone } from '@/interfaces/delivery-zone';
 import { createOrderAction, saveAbandonedCartAction, createFailedOrderAction } from '@/app/actions/orders';
+import AddressPicker from '@/components/shipping/address-picker';
+import StopDeskPicker from '@/components/shipping/stop-desk-picker';
+import type { WilayaInfo } from '@/interfaces/shipment';
 import toast from 'react-hot-toast';
+
+interface Quote {
+  deliveryFee: number;
+  returnFee: number;
+  currency: string;
+  courier: string;
+}
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -20,7 +29,13 @@ export default function CheckoutPage() {
   const { fmt } = useCurrency();
   const [loading, setLoading] = useState(false);
   const [deliveryMethod, setDeliveryMethod] = useState<'home' | 'desk'>('home');
-  const [selectedWilaya, setSelectedWilaya] = useState('');
+
+  // Address: numeric wilaya code + exact commune spelling. The old model stored
+  // a wilaya *name* and derived the code with `indexOf(name) + 1`, which breaks
+  // on accents and on any change to the list order.
+  const [wilayaCode, setWilayaCode] = useState<number | null>(null);
+  const [wilayaInfo, setWilayaInfo] = useState<WilayaInfo | null>(null);
+  const [communeName, setCommuneName] = useState('');
   const [zones, setZones] = useState<DeliveryZone[]>([]);
   const [coupon, setCoupon] = useState('');
   const [discount, setDiscount] = useState(0);
@@ -28,6 +43,16 @@ export default function CheckoutPage() {
   const [loyaltyCfg, setLoyaltyCfg] = useState<LoyaltyConfig>(DEFAULT_LOYALTY);
   const [pointsBalance, setPointsBalance] = useState(0);
   const [pointsToUse, setPointsToUse] = useState('');
+
+  // Stop desk
+  const [stopDeskId, setStopDeskId] = useState('');
+  const [stopDeskName, setStopDeskName] = useState('');
+
+  // Live quote from the courier gateway, with static zones as fallback.
+  const [quote, setQuote] = useState<Quote | null>(null);
+  const [quoting, setQuoting] = useState(false);
+  const [quoteError, setQuoteError] = useState('');
+  const [useFallbackZones, setUseFallbackZones] = useState(false);
 
   useEffect(() => {
     getDeliveryZones().then(setZones).catch(() => {});
@@ -61,7 +86,7 @@ export default function CheckoutPage() {
           customerName: (fd?.get('fullName') as string) || userProfile?.displayName || undefined,
           customerPhone: ((fd?.get('phone') as string) || '').replace(/\s/g, '') || undefined,
           customerEmail: (fd?.get('email') as string) || currentUser?.email || undefined,
-          wilaya: selectedWilaya || undefined,
+          wilaya: wilayaInfo?.nameFr || undefined,
           subtotal,
         }).catch(() => {});
       } catch { /* snapshot failure is non-blocking */ }
@@ -69,17 +94,59 @@ export default function CheckoutPage() {
     snapshot();
     const t = setInterval(snapshot, 60000);
     return () => clearInterval(t);
-  }, [items, subtotal, sessionId, selectedWilaya, currentUser, userProfile]);
+  }, [items, subtotal, sessionId, wilayaInfo, currentUser, userProfile]);
 
-  const wilayaIndex = wilayas.indexOf(selectedWilaya) + 1;
-  const zone = zones.find((z) => z.wilayaId === wilayaIndex);
-  const deliveryCost = selectedWilaya
-    ? zone
-      ? deliveryMethod === 'home' ? zone.homePrice : zone.deskPrice
-      : deliveryMethod === 'home' ? 800 : 400
-    : 0;
-  const homePrice = zone?.homePrice ?? 800;
-  const deskPrice = zone?.deskPrice ?? 400;
+  /**
+   * Quote delivery for the current address.
+   *
+   * Live rates beat hardcoded tables because fees vary by wilaya, commune,
+   * delivery type and over time — a flat national price quietly loses money on
+   * the Grand Sud. Falls back to the admin's `delivery_zones` when the gateway
+   * is unreachable, so checkout never blocks on a third party.
+   */
+  const fetchQuote = useCallback(async () => {
+    if (!wilayaCode) {
+      setQuote(null);
+      return;
+    }
+    setQuoting(true);
+    setQuoteError('');
+    try {
+      const res = await fetch('/api/shipping/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ wilayaCode, deliveryMethod }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Cotation indisponible.');
+      setQuote({
+        deliveryFee: data.deliveryFee,
+        returnFee: data.returnFee,
+        currency: data.currency || 'DZD',
+        courier: data.courier,
+      });
+      setUseFallbackZones(false);
+    } catch (err) {
+      setQuote(null);
+      setQuoteError(err instanceof Error ? err.message : 'Cotation indisponible.');
+      setUseFallbackZones(true);
+    } finally {
+      setQuoting(false);
+    }
+  }, [wilayaCode, deliveryMethod]);
+
+  useEffect(() => {
+    fetchQuote();
+  }, [fetchQuote]);
+
+  // Static zone price, used only when the live quote fails.
+  const zone = zones.find((z) => z.wilayaId === (wilayaInfo?.shipAs ?? wilayaCode));
+  const zonePrice = deliveryMethod === 'home' ? zone?.homePrice ?? 800 : zone?.deskPrice ?? 400;
+
+  const deliveryCost = quote?.deliveryFee ?? (useFallbackZones && wilayaCode ? zonePrice : 0);
+  const returnFee = quote?.returnFee ?? 0;
+  const homePrice = quote?.deliveryFee ?? zone?.homePrice ?? 800;
+  const deskPrice = quote?.deliveryFee ?? zone?.deskPrice ?? 400;
   const requestedPoints = Math.max(Math.floor(Number(pointsToUse) || 0), 0);
   const loyaltyDiscount = loyaltyCfg.active && currentUser
     ? Math.min(Math.round(Math.min(requestedPoints, pointsBalance) * loyaltyCfg.valuePerPoint), subtotal)
@@ -111,8 +178,12 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!selectedWilaya) {
-      toast.error('Selectionnez une wilaya');
+    if (!wilayaCode || !communeName) {
+      toast.error('Selectionnez une wilaya et une commune');
+      return;
+    }
+    if (deliveryMethod === 'desk' && !stopDeskId) {
+      toast.error('Choisissez un point de relais');
       return;
     }
     setLoading(true);
@@ -120,6 +191,11 @@ export default function CheckoutPage() {
       const formData = new FormData(e.currentTarget);
       formData.append('items', JSON.stringify(items));
       formData.append('deliveryMethod', deliveryMethod);
+      formData.append('wilayaCode', String(wilayaCode));
+      formData.append('communeName', communeName);
+      formData.append('stopDeskId', stopDeskId);
+      formData.append('stopDeskName', stopDeskName);
+      formData.append('returnFee', String(returnFee));
       formData.append('subtotal', subtotal.toString());
       formData.append('deliveryFee', deliveryCost.toString());
       formData.append('discount', discount.toString());
@@ -143,7 +219,7 @@ export default function CheckoutPage() {
             email: (formData.get('email') as string) || undefined,
             items,
             total,
-            wilaya: selectedWilaya || undefined,
+            wilaya: wilayaInfo?.nameFr || undefined,
             failureReason: result.error || 'Échec commande',
           });
         } catch { /* failure capture is non-blocking */ }
@@ -176,33 +252,50 @@ export default function CheckoutPage() {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Téléphone</label>
-                <input name="phone" required type="tel" placeholder="05XX XX XX XX" defaultValue={userProfile?.phone || ''}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600" />
+                <input
+                  name="phone"
+                  required
+                  type="tel"
+                  inputMode="numeric"
+                  placeholder="0551234567"
+                  pattern="0[5-7][0-9]{8}"
+                  title="Numéro algérien : 05, 06 ou 07 suivi de 8 chiffres"
+                  defaultValue={userProfile?.phone || ''}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600"
+                />
+                <p className="text-xs text-gray-500">Format 05/06/07 + 8 chiffres. C&apos;est le numéro que le transporteur appelle.</p>
               </div>
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-gray-700">Email (optionnel)</label>
                 <input name="email" type="email" defaultValue={userProfile?.email || currentUser?.email || ''}
                   className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600" />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Wilaya</label>
-                <select name="wilaya" required value={selectedWilaya} onChange={(e) => setSelectedWilaya(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600 bg-white">
-                  <option value="">Sélectionner...</option>
-                  {wilayas.map((w, i) => (
-                    <option key={i} value={w}>{String(i + 1).padStart(2, '0')} - {w}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Commune</label>
-                <input name="commune" required type="text" defaultValue={defaultAddress?.commune || ''}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600" />
+              <div className="md:col-span-2">
+                <AddressPicker
+                  wilayaCode={wilayaCode}
+                  communeName={communeName}
+                  wilayaName={wilayaInfo?.nameFr}
+                  onWilayaChange={(code, info) => {
+                    setWilayaCode(code);
+                    setWilayaInfo(info);
+                  }}
+                  onCommuneChange={setCommuneName}
+                />
+                {/* Hidden mirrors so the server action reads the same values. */}
+                <input type="hidden" name="wilaya" value={wilayaInfo?.nameFr || ''} />
+                <input type="hidden" name="commune" value={communeName} />
               </div>
               <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-gray-700">Adresse complète</label>
-                <textarea name="address" required rows={2} defaultValue={defaultAddress?.address || ''}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600" />
+                <label className="text-sm font-medium text-gray-700">
+                  Adresse complète {deliveryMethod === 'home' ? '(obligatoire)' : '(optionnelle)'}
+                </label>
+                <textarea
+                  name="address"
+                  rows={2}
+                  required={deliveryMethod === 'home'}
+                  defaultValue={defaultAddress?.address || ''}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600"
+                />
               </div>
             </div>
           </div>
@@ -218,7 +311,7 @@ export default function CheckoutPage() {
                   <div className="font-medium text-gray-900">À domicile</div>
                   <div className="text-sm text-gray-500">Livraison jusqu&apos;à votre porte</div>
                 </div>
-                <div className="font-bold text-gray-900">{selectedWilaya ? fmt(homePrice) : '--'}</div>
+                <div className="font-bold text-gray-900">{wilayaCode ? fmt(homePrice) : '--'}</div>
               </label>
 
               <label className={`cursor-pointer flex items-center p-4 border-2 rounded-xl transition ${deliveryMethod === 'desk' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'}`}>
@@ -228,9 +321,59 @@ export default function CheckoutPage() {
                   <div className="font-medium text-gray-900">Point de relais</div>
                   <div className="text-sm text-gray-500">Bureau de livraison</div>
                 </div>
-                <div className="font-bold text-gray-900">{selectedWilaya ? fmt(deskPrice) : '--'}</div>
+                <div className="font-bold text-gray-900">{wilayaCode ? fmt(deskPrice) : '--'}</div>
               </label>
             </div>
+
+            {/* Desk selection only makes sense once a wilaya is chosen. */}
+            {deliveryMethod === 'desk' && wilayaCode && (
+              <div className="pt-4 border-t border-gray-100">
+                <StopDeskPicker
+                  wilayaCode={wilayaCode}
+                  courier={quote?.courier || 'sandbox'}
+                  communeName={communeName}
+                  value={stopDeskId}
+                  onChange={(id, name) => {
+                    setStopDeskId(id);
+                    setStopDeskName(name);
+                  }}
+                />
+              </div>
+            )}
+
+            {quoting && (
+              <p className="flex items-center gap-2 text-xs text-gray-500">
+                <Loader2 size={12} className="animate-spin" />
+                Calcul du frais de livraison...
+              </p>
+            )}
+
+            {quoteError && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 space-y-2">
+                <p className="text-xs text-amber-800 flex items-start gap-1">
+                  <Info size={12} className="mt-0.5 shrink-0" />
+                  {quoteError}
+                </p>
+                {useFallbackZones && wilayaCode && (
+                  <p className="text-xs text-amber-800">
+                    Tarif de repli appliqué : <strong>{fmt(zonePrice)}</strong>
+                  </p>
+                )}
+              </div>
+            )}
+
+            {quote && (
+              <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 space-y-1">
+                <p className="text-xs text-blue-900 font-medium">
+                  Livraison {fmt(quote.deliveryFee)} (transporteur : {quote.courier})
+                </p>
+                {quote.returnFee > 0 && (
+                  <p className="text-xs text-blue-700">
+                    Frais de retour : {fmt(quote.returnFee)} — facturés uniquement en cas de refus.
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -291,7 +434,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-gray-600">
                   <span>Livraison</span>
-                  <span>{selectedWilaya ? fmt(deliveryCost) : '--'}</span>
+                  <span>{wilayaCode ? fmt(deliveryCost) : '--'}</span>
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-green-600 font-medium">
@@ -312,11 +455,13 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <button type="submit" disabled={loading || !selectedWilaya}
+            <button type="submit" disabled={loading || !wilayaCode || !communeName || (deliveryMethod === 'desk' && !stopDeskId)}
               className="w-full bg-indigo-600 text-white py-4 rounded-xl font-bold flex justify-center items-center gap-2 hover:bg-indigo-700 transition disabled:opacity-50">
               {loading ? 'Traitement...' : (<><Check className="w-5 h-5" /> Confirmer la commande</>)}
             </button>
-            <p className="text-xs text-center text-gray-500">Paiement à la livraison</p>
+            <p className="text-xs text-center text-gray-500">
+              Paiement à la livraison ({fmt(total)}). Le colis est créé après confirmation par téléphone.
+            </p>
           </div>
         </div>
       </form>

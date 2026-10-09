@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { X, MapPin, Phone, User, Package, Clock, MessageSquare, Save } from 'lucide-react';
-import { Order } from '@/interfaces/order';
+import { Order, TrackingEntry } from '@/interfaces/order';
 import { updateOrder, logActivity } from '@/service/firebase/database';
+import ShipmentPanel from '@/components/shipping/shipment-panel';
+import { getStatusLabel, isCourierStatus } from '@/service/shipping/status-map';
 import toast from 'react-hot-toast';
 
 interface CommandAmplifyProps {
@@ -20,6 +22,16 @@ const STATES = [
 ];
 
 const stateLabel = (s: number): string => STATES.find((x) => x.value === s)?.label || `Statut ${s}`;
+
+/**
+ * Label a history entry, which may be a DzShip status string (courier-driven)
+ * or a legacy 0-3 state number (manual, written before the integration).
+ */
+function entryLabel(status: TrackingEntry['status']): string {
+  if (typeof status === 'number') return stateLabel(status);
+  if (isCourierStatus(status)) return getStatusLabel(status).fr;
+  return status;
+}
 
 export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmplifyProps) {
   const [status, setStatus] = useState(order.state);
@@ -151,6 +163,9 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
             {/* Right Column: Actions & Timeline */}
             <div className="space-y-6">
 
+              {/* Courier: confirm then ship */}
+              <ShipmentPanel order={order} onUpdated={onUpdated} />
+
               {/* Status Update & Notes */}
               <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Mise à jour</h3>
@@ -203,7 +218,7 @@ export default function CommandAmplify({ order, onClose, onUpdated }: CommandAmp
                         {idx === history.length - 1 ? <Clock size={12} /> : <MessageSquare size={12} />}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{note.note || stateLabel(note.status)}</p>
+                        <p className="text-sm font-medium text-gray-900">{note.note || entryLabel(note.status)}</p>
                         <p className="text-xs text-gray-500 mt-0.5">{note.timestamp ? note.timestamp.slice(0, 16).replace('T', ' ') : ''}</p>
                       </div>
                     </div>

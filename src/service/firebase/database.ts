@@ -17,16 +17,32 @@ import { LoyaltyConfig, DEFAULT_LOYALTY } from '../../interfaces/loyalty';
 import { ReturnRequest, RestockRequest, InventoryLog, InventorySettings, DEFAULT_INVENTORY } from '../../interfaces/returns';
 
 // --- Articles ---
+/**
+ * In-memory descending sort by an ISO date-ish field.
+ * Firestore requires a provisioned composite index for where()+orderBy()
+ * combos, which this project does not create (the deploy key lacks index
+ * permissions). Equality-only queries need no composite index, so we filter
+ * server-side and sort here. Catalog sizes are in the hundreds at most.
+ */
+export function sortByDateDesc<T>(rows: T[], field: Extract<keyof T, string>): T[] {
+  const key = (r: T): string => String((r as Record<string, unknown>)[field] ?? '');
+  return [...rows].sort((a, b) => (key(a) < key(b) ? 1 : key(a) > key(b) ? -1 : 0));
+}
+
 export async function getArticles(filters?: { active?: boolean; category?: number }): Promise<Article[]> {
   let q = query(collection(db, 'articles'), orderBy('createdAt', 'desc'));
   if (filters?.active !== undefined) {
-    q = query(collection(db, 'articles'), where('active', '==', filters.active), orderBy('createdAt', 'desc'));
+    q = query(collection(db, 'articles'), where('active', '==', filters.active));
   }
   if (filters?.category !== undefined) {
-    q = query(collection(db, 'articles'), where('category', '==', filters.category), orderBy('createdAt', 'desc'));
+    q = query(collection(db, 'articles'), where('category', '==', filters.category));
   }
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Article));
+  const rows = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Article));
+  // Single-field orderBy needs no composite index; filtered queries are sorted here.
+  return filters?.active !== undefined || filters?.category !== undefined
+    ? sortByDateDesc(rows, 'createdAt')
+    : rows;
 }
 
 export async function getArticle(id: string): Promise<Article | null> {
@@ -80,9 +96,9 @@ export async function getOrderById(id: string): Promise<Order | null> {
 }
 
 export async function getOrdersByUser(userId: string): Promise<Order[]> {
-  const q = query(collection(db, 'orders'), where('userId', '==', userId), orderBy('date', 'desc'));
+  const q = query(collection(db, 'orders'), where('userId', '==', userId));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order));
+  return sortByDateDesc(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order)), 'date');
 }
 
 export async function createOrder(order: Omit<Order, 'id'>): Promise<string> {
@@ -111,9 +127,9 @@ export async function createFailedOrder(order: Omit<Order, 'id'>): Promise<strin
 }
 
 export async function getFailedOrders(): Promise<Order[]> {
-  const q = query(collection(db, 'orders'), where('type', '==', 'failed'), orderBy('date', 'desc'));
+  const q = query(collection(db, 'orders'), where('type', '==', 'failed'));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order));
+  return sortByDateDesc(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order)), 'date');
 }
 
 export async function resolveFailedOrder(id: string): Promise<void> {
@@ -125,10 +141,11 @@ export async function resolveFailedOrder(id: string): Promise<void> {
 export async function getReviews(articleId?: string): Promise<Review[]> {
   let q = query(collection(db, 'reviews'), orderBy('date', 'desc'));
   if (articleId) {
-    q = query(collection(db, 'reviews'), where('articleId', '==', articleId), orderBy('date', 'desc'));
+    q = query(collection(db, 'reviews'), where('articleId', '==', articleId));
   }
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Review));
+  const rows = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Review));
+  return articleId ? sortByDateDesc(rows, 'date') : rows;
 }
 
 export async function createReview(review: Omit<Review, 'id'>): Promise<string> {
